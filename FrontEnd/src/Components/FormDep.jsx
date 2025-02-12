@@ -11,7 +11,7 @@ const FormDep = (params) => {
     useEffect(()=>{
         NameInput.current.focus();
         getDepartment();
-    });
+    },[]);
     const getDepartment = async () => {
         if (params.id !== null) {
             const res = await sendRequest('GET','',(url+'/'+params))
@@ -22,12 +22,35 @@ const FormDep = (params) => {
         e.preventDefault();
         if (params.id !== null) {
             method= 'PUT';
-            url = 'api/departments/'
+            url = 'api/departments/'+params.id;
+            redirect = '/';
+        }
+        const res = await sendRequest(method,{name:name},url,redirect)
+        if (method == 'POST' && res.status == true) {
+            setName('');
         }
     }
   return (
-    <div>
-      
+    <div className='container-fluid'>
+      <div className='row mt-5'>
+        <div className='col-md-4 offset-md-4'>
+            <div className='card border border-info'>
+                <div className='card-header gb-info border border-info'>
+                    {params.title}
+                </div>
+                <div className='card-body'>
+                    <form onSubmit={save}>
+                        <DivInput type='text' icon='fa-building' value={name} className='form-control' placeholder='Name' required='required' ref={NameInput} handleChange={(e) => setName(e.target.value)} />
+                        <div className='d-grid col-10 mx-auto'>
+                            <button className='btn btn-dark'>
+                                <i className='fa-solid fa-save'></i>Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
     </div>
   )
 }

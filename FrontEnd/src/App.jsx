@@ -27,6 +27,4 @@ function App() {
   )
 }
 
-//Video dejado en min 58:49
-
 export default App
