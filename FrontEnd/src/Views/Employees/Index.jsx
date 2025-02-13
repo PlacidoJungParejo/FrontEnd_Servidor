@@ -140,8 +140,14 @@ const Employees = () => {
             <DivInput type='text' icon='fa-user' value={name} className='form-control' placeholder='Name' required='required' ref={NameInput} handleChange={(e) => setName(e.target.value)} />
             <DivInput type='email' icon='fa-at' value={email} className='form-control' placeholder='Email' required='required' handleChange={(e) => setEmail(e.target.value)} />
             <DivInput type='phone' icon='fa-phone' value={phone} className='form-control' placeholder='Phone' required='required' handleChange={(e) => setPhone(e.target.value)} />
-            <DivSelect icon='form-select' value={phone} className='form-control' placeholder='Phone' required='required' handleChange={(e) => setPhone(e.target.value)} />
+            <DivSelect icon='fa-building' value={departmentId} className='form-select' options={departments} handleChange={(e) => setDepartmentId(e.target.value)} />
+            <button className='btn btn-success'>
+              <i className='fa.solid fa-save'></i> Save
+            </button>
           </form>
+        </div>
+        <div className='modal-footer'>
+            <button className='btn btn-dark' data-bs-dimiss='modal' ref={close}>Close</button>
         </div>
       </Modal>
     </div>
