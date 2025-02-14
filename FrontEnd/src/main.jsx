@@ -6,10 +6,11 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
 import axios from 'axios'
+let env = import.meta.env.base_url
 
 window.axios = axios
 
-window.axios.defaults.baseURL = 'https://localhost/company/public'
+window.axios.defaults.baseURL = env
 window.axios.defaults.headers.common['Accept'] = 'application/json'
 window.axios.defaults.headers.common['Content-Type'] = 'application/json'
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
