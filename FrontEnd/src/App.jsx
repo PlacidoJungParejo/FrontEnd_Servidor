@@ -3,7 +3,7 @@ import Nav from './Components/Nav';
 import Departments from "./Views/Departments/Index";
 import CreateDepartments from "./Views/Departments/Create";
 import EditDepartments from "./Views/Departments/Edit";
-import Employees from "./Views/Employees/Index";
+import Users from "./Views/Users/Index";
 import Login from './Views/Login'
 import Register from './Views/Register'
 import ProtectedRoutes from './Components/ProtectedRoutes'
@@ -20,7 +20,7 @@ function App() {
           <Route path="/" element={<Departments />} />
           <Route path="/create" element={<CreateDepartments />} />
           <Route path="/edit/:id" element={<EditDepartments />} />
-          <Route path="/Employees" element={<Employees />} />
+          <Route path="/users" element={<Users />} />
         </Route>
       </Routes>
     </BrowserRouter>

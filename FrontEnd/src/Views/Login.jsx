@@ -5,7 +5,7 @@ import DivInput from '../Components/DivInput'
 import storage from '../Storage/storage'
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('')
   const go = useNavigate();
   const csrf = async () => {
@@ -14,7 +14,7 @@ const Login = () => {
   const login = async (e) => {
     e.preventDefault();
     await csrf();
-    const form = { email: email, password: password };
+    const form = { userName: userName, password: password };
     const res = await sendRequest('POST', form, '/api/auth/login', '', false);
     if (res.status == true) {
       storage.set('authToken', res.token);
@@ -32,7 +32,7 @@ const Login = () => {
             </div>
             <div className='card-body'>
               <form onSubmit={login}>
-                <DivInput type='email' icon='fa-at' value={email} className='form-control' placeholder='Email' required='required' handleChange={(e) => setEmail(e.target.value)} />
+                <DivInput type='text' icon='fa-at' value={userName} className='form-control' placeholder='Username...' required='required' handleChange={(e) => setEmail(e.target.value)} />
                 <DivInput type='password' icon='fa-key' value={password} className='form-control' placeholder='Password' required='required' handleChange={(e) => setPassword(e.target.value)} />
                 <div className='d-grid col-10 mx-auto'>
                   <button className='btn btn-dark'>

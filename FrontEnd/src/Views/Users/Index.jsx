@@ -7,8 +7,8 @@ import Modal from '../../Components/Modal';
 import { confirmation, sendRequest } from '../../functions';
 import { PaginationControl } from 'react-bootstrap-pagination-control';
 
-const Employees = () => {
-  const [employees, setEmployees] = useState([])
+const Users = () => {
+  const [users, setUsers] = useState([])
   const [id,setId] = useState('')
   const [name,setName] = useState('')
   const [email,setEmail] = useState('')
@@ -27,12 +27,12 @@ const Employees = () => {
   let method = '';
   let url = '';
   useEffect(()=>{
-    getEmployees(1);
+    getUsers(1);
     getDepartments()
   },[]);
-  const getEmployees = async (page) => {
-    const res = await sendRequest('GET','','/api/employees?page='+page,'');
-    setEmployees(res.data);
+  const getUsers = async (page) => {
+    const res = await sendRequest('GET','','/api/v4/users?page='+page,'');
+    setUsers(res.data);
     setRows(res.total);
     setPageSize(res.per_page);
     setClassTable('');
@@ -43,7 +43,7 @@ const Employees = () => {
     setDepartments(res);
   }
   const deleteEmployee = (id,name) => {
-    confirmation(name,'/api/employees/'+id,'employees')
+    confirmation(name,'/api/users/'+id,'users')
   }
   const clear = () =>{
     setName('');
@@ -71,11 +71,11 @@ const Employees = () => {
     e.preventDefault();
     if (operation == 1) {
       method = 'POST';
-      url = 'api/employees'
+      url = 'api/users'
     }
     else{
       method = 'PUT';
-      url = '/api/employees/'+id;
+      url = '/api/users/'+id;
     }
     const form = {name:name,email:email,phone:phone,department_id:departmentId};
     const res = await sendRequest(method,form,url,'');
@@ -84,13 +84,13 @@ const Employees = () => {
     }
     if (res.status == true) {
       clear();
-      getEmployees(page)
+      getUsers(page)
       setTimeout( ()=> NameInput.current.focus(),3000)
     }
   }
   const goPage = (p) => {
     setPage(p);
-    getEmployees(p);
+    getUsers(p);
   }
   return (
     <div className='container-fluid'>
@@ -111,7 +111,7 @@ const Employees = () => {
             <th></th>
             </tr></thead>
           <tbody className='table-group-divider'>
-            {employees.map((row,i)=>(
+            {users.map((row,i)=>(
               <tr key={row.id}>
                 <td>{(i+1)}</td>
                 <td>{row.name}</td>
@@ -119,7 +119,7 @@ const Employees = () => {
                 <td>{row.phone}</td>
                 <td>{row.department}</td>
                 <td>
-                  <button className='btn btn-warning' data-bs-toggle='modal' data-bs-formTarget='#modalEmployees' onClick={()=>openModal(2,row.name,row.email,row.phone,row.department_id,row.id)}>
+                  <button className='btn btn-warning' data-bs-toggle='modal' data-bs-formTarget='#modalUsers' onClick={()=>openModal(2,row.name,row.email,row.phone,row.department_id,row.id)}>
                     <i className='fa-solid fa-edit'></i>
                   </button>
                 </td>
@@ -134,7 +134,7 @@ const Employees = () => {
         </table>
         <PaginationControl changePage={page => goPage(page)} next={true} limit={pageSize} page={page} total={rows} />
       </DivTable>
-      <Modal title={title} modal='modalEmployees'>
+      <Modal title={title} modal='modalUsers'>
         <div className='modal-body'>
           <form onSubmit={save}>
             <DivInput type='text' icon='fa-user' value={name} className='form-control' placeholder='Name' required='required' ref={NameInput} handleChange={(e) => setName(e.target.value)} />
@@ -154,4 +154,4 @@ const Employees = () => {
   )
 }
 
-export default Employees
+export default Users

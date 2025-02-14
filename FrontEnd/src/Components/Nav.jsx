@@ -27,7 +27,7 @@ const Nav = () => {
               <Link to='/' className='nav-link'>Departments</Link>
             </li>
             <li className='nav-item px-lg-5'>
-              <Link to='/employees' className='nav-link'>Employees</Link>
+              <Link to='/users' className='nav-link'>Users</Link>
             </li>
           </ul>
           <ul className='navbar-nav mx-auto mb-2'>
