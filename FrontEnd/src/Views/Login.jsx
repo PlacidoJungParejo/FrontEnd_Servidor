@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     await csrf();
     const form = { email: email, password: password };
-    const res = await sendRequest('POST', form, '/api/auth/login', '', false);
+    const res = await sendRequest('POST', form, '/users/SSR/login', '', false);
     if (res.status == true) {
       storage.set('authToken', res.token);
       storage.set('authUser', res.data);
