@@ -13,9 +13,9 @@ const Login = () => {
     const form = { username: username, password: password };
     
     // Depuración: Ver qué se envía al backend
-    console.log("Enviando datos:", form);
+    console.log("Enviando datos:", form); 
 
-    const res = await sendRequest('POST', form, '/users/CSR/login', '', false);
+    const res = await sendRequest('POST', form, '/users/CSR/login', '/login', false);
 
     // Depuración: Ver qué responde el backend
     console.log("Respuesta del backend:", res);
@@ -24,7 +24,7 @@ const Login = () => {
         console.log("Token recibido:", res.token);  // Verificar si realmente se recibe un token
         storage.set('authToken', res.token);
         storage.set('authUser', res.data);
-        go("/login")
+        
     } else {
         console.error("Error en login: No se recibió un token");
     }
