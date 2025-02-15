@@ -10,14 +10,26 @@ const Login = () => {
   const go = useNavigate();
   const login = async (e) => {
     e.preventDefault();
-    const form = { userName: username, password: password };
+    const form = { username: username, password: password };
+    
+    // Depuración: Ver qué se envía al backend
+    console.log("Enviando datos:", form);
+
     const res = await sendRequest('POST', form, '/users/CSR/login', '', false);
-    if (res.status == true) {
-      storage.set('authToken', res.token);
-      storage.set('authUser', res.data);
-      go('/')
+
+    // Depuración: Ver qué responde el backend
+    console.log("Respuesta del backend:", res);
+
+    if (res.data) {
+        console.log("Token recibido:", res.token);  // Verificar si realmente se recibe un token
+        storage.set('authToken', res.token);
+        storage.set('authUser', res.data);
+        go("/login")
+    } else {
+        console.error("Error en login: No se recibió un token");
     }
-  }
+};
+
   return (
     <div className='container-fluid'>
       <div className="row mt-5">

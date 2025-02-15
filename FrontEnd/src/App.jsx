@@ -7,8 +7,8 @@ import Users from "./Views/Users/Index";
 import Login from './Views/Login'
 import Register from './Views/Register'
 import ProtectedRoutes from './Components/ProtectedRoutes'
-import Inscriptions from "./Views/Inscriptions/Index";
-import CreateInscription from "./Views/Inscriptions/Create";
+// import Inscriptions from "./Views/Inscriptions/Index";
+// import CreateInscription from "./Views/Inscriptions/Create";
 
 function App() {
 
@@ -16,8 +16,8 @@ function App() {
     <BrowserRouter>
       <Nav />
       <Routes>
-        <Route path="/inscriptions" element={<Inscriptions />} />
-        <Route path="/inscriptions/create" element={<CreateInscription />} />
+        {/* <Route path="/inscriptions" element={<Inscriptions />} />
+        <Route path="/inscriptions/create" element={<CreateInscription />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoutes />}>
