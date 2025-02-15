@@ -24,11 +24,7 @@ const Login = () => {
         console.log("Token recibido:", res.token);  // Verificar si realmente se recibe un token
         storage.set('authToken', res.token);
         storage.set('authUser', res.data);
-<<<<<<< HEAD
-        
-=======
         go("/users")
->>>>>>> 11ed429c325d2e1336e0136e8abd3fdc498ba9e9
     } else {
         show_alerta("Error en login: No se recibió un token", "error")
         console.error("Error en login: No se recibió un token");
