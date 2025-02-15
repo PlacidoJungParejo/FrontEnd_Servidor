@@ -9,6 +9,8 @@ import Register from './Views/Register'
 import ProtectedRoutes from './Components/ProtectedRoutes'
 // import Inscriptions from "./Views/Inscriptions/Index";
 // import CreateInscription from "./Views/Inscriptions/Create";
+// import Inscriptions from "./Views/Inscriptions/Index";
+// import CreateInscription from "./Views/Inscriptions/Create";
 
 function App() {
 
@@ -21,7 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoutes />}>
-          <Route path="/" element={<Departments />} />
+          <Route path="/" element={<Users />} />
           <Route path="/create" element={<CreateDepartments />} />
           <Route path="/edit/:id" element={<EditDepartments />} />
           <Route path="/users" element={<Users />} />
