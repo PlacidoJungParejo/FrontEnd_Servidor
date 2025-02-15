@@ -10,7 +10,7 @@ const Login = () => {
   const go = useNavigate();
   const login = async (e) => {
     e.preventDefault();
-    const form = { userName: username, password: password };
+    const form = { username: username, password: password };
     const res = await sendRequest('POST', form, '/users/CSR/login', '', false);
     if (res.status == true) {
       storage.set('authToken', res.token);
