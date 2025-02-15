@@ -19,7 +19,9 @@ const Register = () => {
       e.preventDefault();
       const form = { nif:nif, username:username, password:password, email: email, firstName: firstName, lastName: lastName };
       const res = await sendRequest('POST', form, '/users/CSR', '', false);
-      if (res.status == true) {
+      // Depuración: Ver qué responde el backend
+    console.log("Respuesta del backend:", res);
+      if (res) {
         go('/login')
       }
     }else{

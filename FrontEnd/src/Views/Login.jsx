@@ -20,7 +20,7 @@ const Login = () => {
     // Depuración: Ver qué responde el backend
     console.log("Respuesta del backend:", res);
 
-    if (res.data) {
+    if (res) {
         console.log("Token recibido:", res.token);  // Verificar si realmente se recibe un token
         storage.set('authToken', res.token);
         storage.set('authUser', res.data);
