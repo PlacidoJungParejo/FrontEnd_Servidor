@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 import storage from './Storage/storage'
 
 export const show_alerta = (msj,icon) =>{
-    Swal.fire({title:msj, icon:icon, buttonStyling:true})
+    Swal.fire({title:msj, icon:icon})
 }
 
 export const sendRequest = async (method,params,url,redir='',token=true) => {

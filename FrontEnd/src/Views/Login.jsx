@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { sendRequest } from '../functions'
+import { sendRequest, show_alerta } from '../functions'
 import DivInput from '../Components/DivInput'
 import storage from '../Storage/storage'
 
@@ -24,10 +24,43 @@ const Login = () => {
         console.log("Token recibido:", res.token);  // Verificar si realmente se recibe un token
         storage.set('authToken', res.token);
         storage.set('authUser', res.data);
-        go("/login")
+        go("/users")
     } else {
+        show_alerta("Error en login: No se recibió un token", "error")
         console.error("Error en login: No se recibió un token");
     }
+};
+
+const logout = async () => {
+  try {
+    await axios.post(
+      "http://127.0.0.1:3033/api/v4/users/CSR/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${storage.get("authToken")}`,
+          "Content-Type": "application/json"
+        },
+        withCredentials: true
+      }
+    );
+
+    if (storage.get("authToken")) {
+      // Redirigir al login
+      go("/login");
+      // Eliminar token correctamente
+      storage.remove("authToken");
+      storage.remove("authUser");
+      setUsername("")
+      setPassword("")
+      show_alerta("Sesión cerrada con éxito", "success")
+    }
+    
+  } catch (error) {
+    if (!storage.get("authToken")) {
+      show_alerta("No se puede cerrar sesión si no hay una sesión iniciada", "error")
+    }
+  }
 };
 
   return (
@@ -48,9 +81,11 @@ const Login = () => {
                   </button>
                 </div>
               </form>
+              <br />
               <Link to='/register'>
                 <i className='fa-solid fa-user-plus'></i> Register
               </Link>
+              <button className='btn btn-info' onClick={logout}>Logout</button>
             </div>
           </div>
         </div>

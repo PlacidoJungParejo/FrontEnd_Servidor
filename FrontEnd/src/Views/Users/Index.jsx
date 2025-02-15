@@ -9,92 +9,100 @@ import { PaginationControl } from 'react-bootstrap-pagination-control';
 
 const Users = () => {
   const [users, setUsers] = useState([])
-  const [id,setId] = useState('')
-  const [name,setName] = useState('')
-  const [email,setEmail] = useState('')
-  const [phone,setPhone] = useState('')
-  const [operation,setOperation] = useState('')
-  const [title,setTitle] = useState('')
-  const [departmentId,setDepartmentId] = useState('')
-  const [departments,setDepartments] = useState([])
-  const [classLoad,setClassLoad] = useState('')
-  const [classTable,setClassTable] = useState('d-none')
-  const [rows,setRows] = useState(0)
-  const [page,setPage] = useState(1)
-  const [pageSize,setPageSize] = useState(0)
-  const NameInput = useRef();
-  const close = useRef();
-  let method = '';
-  let url = '';
-  useEffect(()=>{
-    getUsers(1);
-    getDepartments()
-  },[]);
-  const getUsers = async (page) => {
-    const res = await sendRequest('GET','','/api/v4/users?page='+page,'');
-    setUsers(res.data);
-    setRows(res.total);
-    setPageSize(res.per_page);
-    setClassTable('');
-    setClassLoad('d-none')
+
+  const getUsers = async () => {
+    const res = await sendRequest("GET", "", "/users/", "")
+    console.log(res)
   }
-  const getDepartment = async () => {
-    const res = await sendRequest('GET','','/api/departments','');
-    setDepartments(res);
-  }
-  const deleteEmployee = (id,name) => {
-    confirmation(name,'/api/users/'+id,'users')
-  }
-  const clear = () =>{
-    setName('');
-    setEmail('');
-    setPhone('');
-    setDepartmentId(1);
-  }
-  const openModal = (op,n,e,p,d,em) =>  {
-    clear();
-    setTimeout( ()=> NameInput.current.focus(),600);
-    setOperation(op);
-    setId(em);
-    if (op == 1) {
-      setTitle('Create employee');
-    }
-    else{
-      setTitle('Update employee');
-      setName(n);
-      setEmail(e);
-      setPhone(p);
-      setDepartmentId(d);
-    }
-  }
-  const save = async(e) => {
-    e.preventDefault();
-    if (operation == 1) {
-      method = 'POST';
-      url = 'api/users'
-    }
-    else{
-      method = 'PUT';
-      url = '/api/users/'+id;
-    }
-    const form = {name:name,email:email,phone:phone,department_id:departmentId};
-    const res = await sendRequest(method,form,url,'');
-    if (method == 'PUT' && res.status == true) {
-      close.current.click();
-    }
-    if (res.status == true) {
-      clear();
-      getUsers(page)
-      setTimeout( ()=> NameInput.current.focus(),3000)
-    }
-  }
-  const goPage = (p) => {
-    setPage(p);
-    getUsers(p);
-  }
+
+  getUsers()
+  // const [id,setId] = useState('')
+  // const [name,setName] = useState('')
+  // const [email,setEmail] = useState('')
+  // const [phone,setPhone] = useState('')
+  // const [operation,setOperation] = useState('')
+  // const [title,setTitle] = useState('')
+  // const [departmentId,setDepartmentId] = useState('')
+  // const [departments,setDepartments] = useState([])
+  // const [classLoad,setClassLoad] = useState('')
+  // const [classTable,setClassTable] = useState('d-none')
+  // const [rows,setRows] = useState(0)
+  // const [page,setPage] = useState(1)
+  // const [pageSize,setPageSize] = useState(0)
+  // const NameInput = useRef();
+  // const close = useRef();
+  // let method = '';
+  // let url = '';
+  // useEffect(()=>{
+  //   getUsers(1);
+  //   getDepartments()
+  // },[]);
+  // const getUsers = async (page) => {
+  //   const res = await sendRequest('GET','','/api/v4/users?page='+page,'');
+  //   setUsers(res.data);
+  //   setRows(res.total);
+  //   setPageSize(res.per_page);
+  //   setClassTable('');
+  //   setClassLoad('d-none')
+  // }
+  // const getDepartment = async () => {
+  //   const res = await sendRequest('GET','','/api/departments','');
+  //   setDepartments(res);
+  // }
+  // const deleteEmployee = (id,name) => {
+  //   confirmation(name,'/api/users/'+id,'users')
+  // }
+  // const clear = () =>{
+  //   setName('');
+  //   setEmail('');
+  //   setPhone('');
+  //   setDepartmentId(1);
+  // }
+  // const openModal = (op,n,e,p,d,em) =>  {
+  //   clear();
+  //   setTimeout( ()=> NameInput.current.focus(),600);
+  //   setOperation(op);
+  //   setId(em);
+  //   if (op == 1) {
+  //     setTitle('Create employee');
+  //   }
+  //   else{
+  //     setTitle('Update employee');
+  //     setName(n);
+  //     setEmail(e);
+  //     setPhone(p);
+  //     setDepartmentId(d);
+  //   }
+  // }
+  // const save = async(e) => {
+  //   e.preventDefault();
+  //   if (operation == 1) {
+  //     method = 'POST';
+  //     url = 'api/users'
+  //   }
+  //   else{
+  //     method = 'PUT';
+  //     url = '/api/users/'+id;
+  //   }
+  //   const form = {name:name,email:email,phone:phone,department_id:departmentId};
+  //   const res = await sendRequest(method,form,url,'');
+  //   if (method == 'PUT' && res.status == true) {
+  //     close.current.click();
+  //   }
+  //   if (res.status == true) {
+  //     clear();
+  //     getUsers(page)
+  //     setTimeout( ()=> NameInput.current.focus(),3000)
+  //   }
+  // }
+  // const goPage = (p) => {
+  //   setPage(p);
+  //   getUsers(p);
+  // }
   return (
     <div className='container-fluid'>
-      <DivAdd>
+      <h1>hola</h1>
+      {/* <DivAdd>
         <button className='btn btn-dark' data-bs-toggle='modal' data-bs-formTarget='#modalEmployees' onClick={()=>openModal(1)}>
           <i className='fa-solid fa-circle-plus'></i> Add
         </button>
@@ -149,7 +157,7 @@ const Users = () => {
         <div className='modal-footer'>
             <button className='btn btn-dark' data-bs-dimiss='modal' ref={close}>Close</button>
         </div>
-      </Modal>
+      </Modal> */}
     </div>
   )
 }

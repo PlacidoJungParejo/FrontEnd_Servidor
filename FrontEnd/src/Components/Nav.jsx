@@ -1,38 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom';
 import storage from '../Storage/storage';
+import {show_alerta} from "../functions"
 import axios from 'axios'; // Asegúrate de importar axios
+
+
 
 const Nav = () => {
   const go = useNavigate();
 
-  const logout = async () => {
-    try {
-      await axios.post(
-        "http://127.0.0.1:3033/api/v4/users/CSR/logout",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${storage.get("authToken")}`,
-            "Content-Type": "application/json"
-          },
-          withCredentials: true
-        }
-      );
-
-      if (storage.get("authToken")) {
-        // Redirigir al login
-        go("/login");
-        // Eliminar token correctamente
-        storage.remove("authToken");
-        storage.remove("authUser");
-      }
-      
-    } catch (error) {
-      if (!storage.get("authToken")) {
-        console.error("Error en logout, no hay token:", error);
-      }
-    }
-  };
+  function goLogin(){
+    go("/login")
+  }
 
   return (
     <nav className='navbar navbar-expand-lg navbar-white bg-info'>
@@ -60,7 +38,7 @@ const Nav = () => {
       ) : '' }
       <ul className='navbar-nav mx-auto mb-2'>
             <li className='nav-item px-lg-5'>
-              <button className='btn btn-info' onClick={logout}>Logout</button>
+              <button className='btn btn-info' onClick={goLogin}>Login</button>
             </li>
           </ul>
     </nav>
