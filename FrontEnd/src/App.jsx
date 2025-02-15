@@ -16,8 +16,8 @@ function App() {
     <BrowserRouter>
       <Nav />
       <Routes>
-        <Route path="/inscriptions" element={<Inscriptions />} />
-        <Route path="/inscriptions/create" element={<CreateInscription />} />
+        <Route path="/inscription" element={<Inscriptions />} />
+        <Route path="/inscription/create" element={<CreateInscription />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoutes />}>

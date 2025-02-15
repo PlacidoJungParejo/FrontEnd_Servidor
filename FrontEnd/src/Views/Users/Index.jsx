@@ -11,7 +11,7 @@ const Users = () => {
   const [users, setUsers] = useState([])
 
   const getUsers = async () => {
-    const res = await sendRequest("GET", "", "/users/", "")
+    const res = await sendRequest("GET", "", "", "")
     console.log(res)
   }
 

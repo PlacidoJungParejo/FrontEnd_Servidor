@@ -15,16 +15,15 @@ const Login = () => {
     // Depuración: Ver qué se envía al backend
     console.log("Enviando datos:", form); 
 
-    const res = await sendRequest('POST', form, '/users/CSR/login', '/login', false);
+    const res = await sendRequest('POST', form, '/users/CSR/login', '', false);
 
     // Depuración: Ver qué responde el backend
     console.log("Respuesta del backend:", res);
 
     if (res) {
-        console.log("Token recibido:", res.token);  // Verificar si realmente se recibe un token
         storage.set('authToken', res.token);
         storage.set('authUser', res.data);
-        go("/users")
+        go("/inscription")
     } else {
         show_alerta("Error en login: No se recibió un token", "error")
         console.error("Error en login: No se recibió un token");
@@ -40,8 +39,7 @@ const logout = async () => {
         headers: {
           Authorization: `Bearer ${storage.get("authToken")}`,
           "Content-Type": "application/json"
-        },
-        withCredentials: true
+        }
       }
     );
 

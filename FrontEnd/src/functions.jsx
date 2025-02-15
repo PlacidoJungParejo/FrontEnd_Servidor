@@ -7,21 +7,24 @@ export const show_alerta = (msj,icon) =>{
 
 import axios from "axios";
 
-export const sendRequest = async (method, params, url, redir = '', useToken = true) => {
+
+export const sendRequest = async (method, params, url, redir = '', token = true) => {
     try {
-        if (useToken) {
-            const authToken = localStorage.getItem('authToken'); // Asegurar que obtienes el token
+        if (token) {
+            const authToken = storage.get('authToken'); // Asegurar que obtienes el token
             if (authToken) {
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + authToken; // Corregido 'Bearer'
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
             }
         }
+
+        console.log(axios.defaults.headers.common['Authorization']);
 
         console.log(`📡 Enviando ${method} a:`, url);
 
         const response = await axios({
             method: method,
             url: url,
-            data: params,
+            data: params
         });
 
         console.log("✅ Respuesta recibida:", response.data);
@@ -32,7 +35,6 @@ export const sendRequest = async (method, params, url, redir = '', useToken = tr
                 setTimeout(() => window.location.href = redir, 2000);
             }
         }
-
         return response.data;
     } catch (error) {
         console.error("❌ Error en la solicitud:", error);
@@ -56,8 +58,8 @@ export const confirmation = async (name,url,redir) => {
         icon:'question',showCancelButton:true,
         confirmButtonText:'<i class="fa-solid fa-check"></i> Yes, delete',
         cancelButtonText:'<i class="fa-solid fa-ban"></i> Cancel'
-    }).then( (retult) => {
-        if (XPathResult.isConfirmed) {
+    }).then( (result) => {
+        if (result.isConfirmed) {
             sendRequest('DELETE',{},url,redir);
         }
     })

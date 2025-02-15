@@ -14,7 +14,6 @@ const Inscripciones = () => {
   }, []);
 
   const getEmpresas = async () => {
-    console.log("Llamando a getEmpresas...");
     const res = await sendRequest("GET", "", "/company/CSR", "");
     console.log(res);
   
@@ -28,9 +27,9 @@ const Inscripciones = () => {
   };
   
 
-  // const deleteEmpresa = (id, name) => {
-  //   confirmation(name, "/inscriptions/CSR/" + id);
-  // };
+  const deleteEmpresa = (id, name) => {
+    confirmation(name, "/inscriptions/CSR/" + id);
+  };
 
   return (
     <div className="container-fluid">
