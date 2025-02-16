@@ -9,47 +9,42 @@ import axios from "axios";
 
 
 export const sendRequest = async (method, params, url, redir = '', token = true) => {
+    let res;
     try {
         if (token) {
-            const authToken = storage.get('authToken'); // Asegurar que obtienes el token
-            if (authToken) {
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;
-            }
+            const authToken = storage.get('authToken');  // Obtener el token desde el almacenamiento
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + authToken;  // Asegúrate de que el token esté bien formateado
         }
 
-        console.log(axios.defaults.headers.common['Authorization']);
-
-        console.log(`📡 Enviando ${method} a:`, url);
-
+        // Realiza la solicitud
         const response = await axios({
             method: method,
             url: url,
-            data: params
+            data: params,
         });
 
-        console.log("✅ Respuesta recibida:", response.data);
-
+        res = response.data;
         if (method !== 'GET') {
             show_alerta(response.data.message, 'success');
-            if (redir) {
-                setTimeout(() => window.location.href = redir, 2000);
+        }
+
+        // Redirige si es necesario
+        setTimeout(() => {
+            if (redir !== '') {
+                window.location.href = redir;
             }
-        }
-        return response.data;
-    } catch (error) {
-        console.error("❌ Error en la solicitud:", error);
+        }, 2000);
 
-        if (error.response) {
-            let desc = error.response.data.errors?.map(e => e).join(" ") || error.response.data.message || "Error desconocido";
-            show_alerta(desc, 'error');
-            return error.response.data;
-        } else {
-            show_alerta("No se pudo conectar al servidor", 'error');
-            return null;
-        }
+    } catch (errors) {
+        let desc = '';
+        res = errors.response.data;
+        errors.response.data.errors.map((e) => {
+            desc = desc + ' ' + e;
+        });
+        show_alerta(desc, 'error');
     }
+    return res;
 };
-
 
 export const confirmation = async (name,url,redir) => {
     const alert = Swal.mixin({buttonStyling:true});

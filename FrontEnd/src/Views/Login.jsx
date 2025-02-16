@@ -20,6 +20,7 @@ const Login = () => {
     // Depuración: Ver qué responde el backend
     console.log("Respuesta del backend:", res);
 
+    console.log(res);
     if (res) {
         storage.set('authToken', res.token);
         storage.set('authUser', res.data);

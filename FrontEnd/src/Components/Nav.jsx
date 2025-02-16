@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import storage from '../Storage/storage';
 import {show_alerta} from "../functions"
-import axios from 'axios'; // Asegúrate de importar axios
+import axios from 'axios';
 
 
 
