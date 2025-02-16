@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import DivAdd from "../../Components/DivAdd";
 import DivTable from "../../Components/DivTable";
+import storage from "../../Storage/storage";
 import { Link } from "react-router-dom";
 import { confirmation, sendRequest } from "../../functions";
 
 const Inscripciones = () => {
   const [inscripciones, setInscripciones] = useState([]);
+  const [empresas, setEmpresas] = useState([]);
+  const [users, setUsers] = useState([]);
   const [classLoad, setClassLoad] = useState("");
   const [classTable, setClassTable] = useState("d-none");
 
   useEffect(() => {
     getInscripciones();
+    
   }, []);
 
   const getInscripciones = async () => {
@@ -26,6 +30,34 @@ const Inscripciones = () => {
     setClassLoad("d-none");
   };
 
+  const getUsers = async () => {
+    const res = await sendRequest("GET", "", "/users/CSR", "");
+    console.log(res);
+
+    if (res && res.Users) {
+      setUsers(res.Users);
+    } else {  
+      setUsers([]); // Evitar errores si la API no devuelve datos correctos
+    }
+    setClassTable("");
+    setClassLoad("d-none");
+  };
+
+
+  const getEmpresas = async () => {
+    const res = await sendRequest("GET", "", "/company/CSR", "");
+    console.log(res);
+
+    if (res && res.Empresas) {
+      setEmpresas(res.Empresas);
+    } else {  
+      setEmpresas([]); // Evitar errores si la API no devuelve datos correctos
+    }
+    setClassTable("");
+    setClassLoad("d-none");
+  };
+
+
   const deleteInscripcion = (id, name) => {
     confirmation(name, "/inscription/CSR/" + id);
   };
@@ -33,9 +65,11 @@ const Inscripciones = () => {
   return (
     <div className="container-fluid">
       <DivAdd>
-        <Link to="create" className="btn btn-dark">
-          <i className="fa-solid fa-circle-plus"></i> Add
-        </Link>
+        {storage.get("authUser").profile == "ADMIN" &&
+            <Link to="create" className="btn btn-dark">
+              <i className="fa-solid fa-circle-plus"></i> Add
+            </Link>
+          }
       </DivAdd>
       <DivTable col="6" off="3" classLoad={classLoad} classTable={classTable}>
         <table className="table table-bordered">
@@ -61,7 +95,7 @@ const Inscripciones = () => {
                 <td>{inscripcion.FecFin ? inscripcion.FecFin : "No especificada"}</td>
                 <td>{inscripcion.Observaciones}</td>
                 <td>
-                  <Link to={"/edit/" + inscripcion._id} className="btn btn-warning">
+                  <Link to={"/edit/" + inscripcion.id} className="btn btn-warning">
                     <i className="fa-solid fa-edit"></i>
                   </Link>
                 </td>

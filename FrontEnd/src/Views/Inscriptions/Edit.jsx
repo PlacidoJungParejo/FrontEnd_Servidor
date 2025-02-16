@@ -1,12 +1,12 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import FormDep from '../../Components/FormDep'
+import FormIns from '../../Components/FormIns'
 
 const Edit = () => {
   const {id} = useParams();
   return (
     <div>
-      <FormDep id={id} title='Edit Department'></FormDep>
+      <FormIns id={id} title='Edit Department'></FormIns>
     </div>
   )
 }
