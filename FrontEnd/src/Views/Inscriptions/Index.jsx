@@ -14,17 +14,18 @@ const Inscripciones = () => {
 
   useEffect(() => {
     getInscripciones();
-    
+    getEmpresas();
+    getUsers();
   }, []);
 
   const getInscripciones = async () => {
     const res = await sendRequest("GET", "", "/inscription/CSR", "");
     console.log(res);
 
-    if (res && res.Inscripciones) {
-      setInscripciones(res.Inscripciones);
-    } else {  
-      setInscripciones([]); // Evitar errores si la API no devuelve datos correctos
+    if (res && Array.isArray(res)) {
+      setInscripciones(res);
+    } else {
+      setInscripciones([]);
     }
     setClassTable("");
     setClassLoad("d-none");
@@ -32,46 +33,52 @@ const Inscripciones = () => {
 
   const getUsers = async () => {
     const res = await sendRequest("GET", "", "/users/CSR", "");
-    console.log(res);
 
-    if (res && res.Users) {
-      setUsers(res.Users);
-    } else {  
-      setUsers([]); // Evitar errores si la API no devuelve datos correctos
+    if (res && Array.isArray(res)) {
+      setUsers(res);
+    } else {
+      setUsers([]);
     }
-    setClassTable("");
-    setClassLoad("d-none");
   };
-
 
   const getEmpresas = async () => {
     const res = await sendRequest("GET", "", "/company/CSR", "");
-    console.log(res);
+    console.log(res.empresas);
 
-    if (res && res.Empresas) {
-      setEmpresas(res.Empresas);
-    } else {  
-      setEmpresas([]); // Evitar errores si la API no devuelve datos correctos
+    if (res) {
+      setEmpresas(res.empresas);
+    } else {
+      setEmpresas([]);
     }
-    setClassTable("");
-    setClassLoad("d-none");
   };
-
 
   const deleteInscripcion = (id, name) => {
     confirmation(name, "/inscription/CSR/" + id);
   };
 
+  // Función para obtener el nombre de la empresa
+  const getCompanyName = (idCompany) => {
+    const company = empresas.find((empresa) => empresa._id === idCompany);
+    return company ? `${company.name}` : "Desconocido";
+  };
+
+  // Función para obtener el nombre del usuario
+  const getUserName = (idUser) => {
+    const user = users.find((user) => user.idUser === idUser);
+    return user ? `${user.firstName} ${user.lastName}` : "Desconocido";
+  };
+  
+
   return (
     <div className="container-fluid">
       <DivAdd>
-        {storage.get("authUser").profile == "ADMIN" &&
-            <Link to="create" className="btn btn-dark">
-              <i className="fa-solid fa-circle-plus"></i> Add
-            </Link>
-          }
+        {storage.get("authUser").profile === "ADMIN" && (
+          <Link to="create" className="btn btn-dark">
+            <i className="fa-solid fa-circle-plus"></i> Add
+          </Link>
+        )}
       </DivAdd>
-      <DivTable col="6" off="3" classLoad={classLoad} classTable={classTable}>
+      <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
         <table className="table table-bordered">
           <thead>
             <tr>
@@ -81,10 +88,12 @@ const Inscripciones = () => {
               <th>USUARIO</th>
               <th>FECHA EXPIRACIÓN</th>
               <th>OBSERVACIONES</th>
-              {storage.get("authUser").profile == "ADMIN" &&
-              <th></th> &&
-              <th></th>
-            }
+              {storage.get("authUser").profile === "ADMIN" && (
+                <>
+                  <th>Editar</th>
+                  <th>Eliminar</th>
+                </>
+              )}
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -92,25 +101,27 @@ const Inscripciones = () => {
               <tr key={inscripcion._id}>
                 <td>{i + 1}</td>
                 <td>{inscripcion.FecIni}</td>
-                <td>{inscripcion.company.name} - {inscripcion.company.cif}</td>
-                <td>{inscripcion.user.firstName} {inscripcion.user.lastName} - {inscripcion.user.nif}</td>
-                <td>{inscripcion.FecFin ? inscripcion.FecFin : "No especificada"}</td>
+                <td>{getCompanyName(inscripcion.IdCompany)}</td>
+                <td>{getUserName(inscripcion.IdUser)}</td>
+                <td>{inscripcion.FecFin || "No especificada"}</td>
                 <td>{inscripcion.Observaciones}</td>
-                {storage.get("authUser").profile == "ADMIN" &&
-                <td>
-                  <Link to={"/edit/" + inscripcion.id} className="btn btn-warning">
-                    <i className="fa-solid fa-edit"></i>
-                  </Link>
-                </td> &&
-                <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => deleteInscripcion(inscripcion._id, inscripcion.name)}
-                  >
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
-                </td>
-                }
+                {storage.get("authUser").profile === "ADMIN" && (
+                  <>
+                    <td>
+                      <Link to={`/edit/${inscripcion._id}`} className="btn btn-warning">
+                        <i className="fa-solid fa-edit"></i>
+                      </Link>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => deleteInscripcion(inscripcion._id, inscripcion.Observaciones)}
+                      >
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                    </td>
+                  </>
+                )}
               </tr>
             ))}
           </tbody>
