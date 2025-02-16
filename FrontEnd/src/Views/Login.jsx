@@ -18,16 +18,16 @@ const Login = () => {
     const res = await sendRequest('POST', form, '/users/CSR/login', '', false);
 
     // Depuración: Ver qué responde el backend
-    console.log("Respuesta del backend:", res);
+    console.log("Respuesta del backend:", res.data);
 
-    console.log(res);
-    if (res) {
+    console.log(res.data);
+    if (res.data != undefined) {
         storage.set('authToken', res.token);
         storage.set('authUser', res.data);
         go("/inscription")
     } else {
-        show_alerta("Error en login: No se recibió un token", "error")
-        console.error("Error en login: No se recibió un token");
+        show_alerta("Error al iniciar sesion, credenciales inválidas", "error")
+        console.error("Error al iniciar sesion, credenciales inválidas");
     }
 };
 

@@ -38,11 +38,20 @@ export const sendRequest = async (method, params, url, redir = '', token = true)
     } catch (errors) {
         let desc = '';
         res = errors.response.data;
-        errors.response.data.errors.map((e) => {
-            desc = desc + ' ' + e;
-        });
+    
+        // Verifica si `errors.response.data.errors` es un array antes de llamar a `.map()`
+        if (Array.isArray(errors.response.data.errors)) {
+            errors.response.data.errors.forEach((e) => {
+                desc = desc + ' ' + e;
+            });
+        } else {
+            // Si no es un array, agrega un mensaje de error genérico
+            desc = 'Error desconocido o formato de error inesperado.';
+        }
+    
         show_alerta(desc, 'error');
     }
+    
     return res;
 };
 
