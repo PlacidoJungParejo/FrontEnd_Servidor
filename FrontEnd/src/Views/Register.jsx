@@ -18,7 +18,7 @@ const Register = () => {
       setMal(true)
       e.preventDefault();
       const form = { nif:nif, username:username, password:password, email: email, firstName: firstName, lastName: lastName };
-      const res = await sendRequest('POST', form, '/users/CSR', '', false);
+      const res = await sendRequest('POST', form, '/users/CSR', '', false, "Usuario Registrado Correctamente");
       // Depuración: Ver qué responde el backend
     console.log("Respuesta del backend:", res);
       if (res) {

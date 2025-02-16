@@ -8,7 +8,7 @@ export const show_alerta = (msj,icon) =>{
 import axios from "axios";
 
 
-export const sendRequest = async (method, params, url, redir = '', token = true, mensaje) => {
+export const sendRequest = async (method, params, url, redir = '', token = true, mensaje = '') => {
     let res;
     try {
         if (token) {
@@ -22,6 +22,8 @@ export const sendRequest = async (method, params, url, redir = '', token = true,
             url: url,
             data: params,
         });
+
+        console.log("Mensaje" ,mensaje);
 
         res = response.data;
         if (method !== 'GET') {
@@ -59,10 +61,10 @@ export const sendRequest = async (method, params, url, redir = '', token = true,
 export const confirmation = async (name,url,redir) => {
     const alert = Swal.mixin({buttonStyling:true});
     alert.fire({
-        title:'Are you sure delete '+name+' ?',
+        title:'Estás seguro de eliminar '+name+' ?',
         icon:'question',showCancelButton:true,
-        confirmButtonText:'<i class="fa-solid fa-check"></i> Yes, delete',
-        cancelButtonText:'<i class="fa-solid fa-ban"></i> Cancel'
+        confirmButtonText:'<i class="fa-solid fa-check"></i> Si, eliminar',
+        cancelButtonText:'<i class="fa-solid fa-ban"></i> Cancelar'
     }).then( (result) => {
         if (result.isConfirmed) {
             sendRequest('DELETE',{},url,redir);

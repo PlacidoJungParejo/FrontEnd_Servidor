@@ -4,7 +4,7 @@ import DivTable from "../../Components/DivTable";
 import { Link } from "react-router-dom";
 import { confirmation, sendRequest } from "../../functions";
 
-const Inscripciones = () => {
+const Empresas = () => {
   const [empresas, setEmpresas] = useState([]);
   const [classLoad, setClassLoad] = useState("");
   const [classTable, setClassTable] = useState("d-none");
@@ -81,4 +81,4 @@ const Inscripciones = () => {
   );
 };
 
-export default Inscripciones;
+export default Empresas;
