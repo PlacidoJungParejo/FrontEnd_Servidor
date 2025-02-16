@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Nav from './Components/Nav';
 import Company from "./Views/Company/Index";
 import CreateCompany from "./Views/Company/Create";
@@ -12,6 +12,7 @@ import Register from './Views/Register'
 import ProtectedRoutes from './Components/ProtectedRoutes'
 import Inscriptions from "./Views/Inscriptions/Index";
 import CreateInscription from "./Views/Inscriptions/Create";
+import ViewUser from "./Views/Users/View";
 
 function App() {
 
@@ -32,7 +33,9 @@ function App() {
           <Route path="/users" element={<Users />} />
           <Route path="/users/create" element={<CreateUsers />} />
           <Route path="/users/edit/:id" element={<EditUsers />} />
+          <Route path="/users/view/:id" element={<ViewUser />} />
         </Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   )

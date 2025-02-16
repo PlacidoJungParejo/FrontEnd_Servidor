@@ -81,11 +81,9 @@ const Users = () => {
                   </button>
                 </td>
                   </>
-                  
                 }
-
                 <td>
-                  <Link to={"/users/edit/" + usuario.idUser} className="btn btn-success">
+                  <Link to={"/users/view/" + usuario.idUser} className="btn btn-success">
                     <i className="fas fa-eye"></i>
                   </Link>
                 </td>

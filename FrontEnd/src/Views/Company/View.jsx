@@ -18,8 +18,10 @@ const View = () => {
     setClassLoad("");
     setClassTable("d-none");
     const res = await sendRequest("GET", "", `/company/CSR/${id}`, "");
-    if (res && res.empresa) {
-      setEmpresa(res.empresa);
+    console.log(res);
+    
+    if (res) {
+      setEmpresa(res);
     }
     setClassLoad("d-none");
     setClassTable("");
@@ -29,13 +31,18 @@ const View = () => {
     return <p>Cargando...</p>;
   }
 
+  const formatDate = (dateString) => {
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    return new Date(dateString).toLocaleDateString('es-ES', options);
+  };
+
   return (
     <div className="container-fluid">
-      <DivAdd>
-        <Link to="/company" className="btn btn-primary">
-          <i className="fa-solid fa-arrow-left"></i> Volver
-        </Link>
-      </DivAdd>
+        <DivAdd>
+          <Link to="/company" className="btn btn-primary">
+            <i className="fa-solid fa-arrow-left"></i> Volver
+          </Link>
+        </DivAdd>
       <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
         <table className="table table-bordered">
           <tbody>
@@ -48,16 +55,52 @@ const View = () => {
               <td>{empresa.name}</td>
             </tr>
             <tr>
+              <th>Dirección</th>
+              <td>{empresa.address}</td>
+            </tr>
+            <tr>
+              <th>Área</th>
+              <td>{empresa.area}</td>
+            </tr>
+            <tr>
+              <th>CIF</th>
+              <td>{empresa.cif}</td>
+            </tr>
+            <tr>
               <th>Ciudad</th>
               <td>{empresa.city}</td>
             </tr>
             <tr>
-              <th>Tipo</th>
-              <td>{empresa.type}</td>
+              <th>Fecha de Creación</th>
+              <td>{formatDate(empresa.createDate) === "Invalid Date" ? "Fecha Invalida" : formatDate(empresa.createDate)}</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>{empresa.email}</td>
+            </tr>
+            <tr>
+              <th>Fecha de Modificación</th>
+              <td>{formatDate(empresa.modifiedDate) === "Invalid Date" ? "Fecha Invalida" : formatDate(empresa.modifiedDate)}</td>
             </tr>
             <tr>
               <th>Responsable</th>
               <td>{empresa.personInCharge}</td>
+            </tr>
+            <tr>
+              <th>ID del Responsable</th>
+              <td>{empresa.personInChargeID}</td>
+            </tr>
+            <tr>
+              <th>Teléfono</th>
+              <td>{empresa.phone}</td>
+            </tr>
+            <tr>
+              <th>Código Postal</th>
+              <td>{empresa.postalCode}</td>
+            </tr>
+            <tr>
+              <th>Tipo</th>
+              <td>{empresa.type}</td>
             </tr>
           </tbody>
         </table>

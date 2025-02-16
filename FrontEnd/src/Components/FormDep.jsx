@@ -16,6 +16,7 @@ const FormDep = ({ id, title, Create = false , type}) => {
         const [postalCode, setPostalCode] = useState('');
         const [phone, setPhone] = useState('');
         const [email, setEmail] = useState('');
+        const [createdDate, setCreatedDate] = useState('');
         const [modifiedDate, setModifiedDate] = useState('');
     
     
@@ -69,6 +70,8 @@ const FormDep = ({ id, title, Create = false , type}) => {
                 setPhone('');
                 setEmail('');
                 setModifiedDate('');
+                setCreatedDate(new Date().toLocaleDateString)
+                setModifiedDate(new Date().toLocaleDateString)
             }
         };
     
