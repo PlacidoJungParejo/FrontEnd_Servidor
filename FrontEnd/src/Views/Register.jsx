@@ -14,7 +14,10 @@ const Register = () => {
   const [mal, setMal] = useState(true)
   const [contraMal, setContraMal] = useState(true)
   const go = useNavigate();
+
   const register = async (e) => {
+    console.log(password)
+    console.log(repeat)
     if(password === repeat){
       setMal(true)
       e.preventDefault();
@@ -35,6 +38,7 @@ const Register = () => {
 
   function validarContrasena(e) {
     setPassword(e.target.value)
+    console.log(e.target.value)
 
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&]{8,}$/;
     if(regex.test(e.target.value)){
@@ -64,7 +68,7 @@ const Register = () => {
                 <DivInput type='password' icon='fa-key' value={repeat} className='form-control' placeholder='Repeat password' required='required' handleChange={(e) => setRepeat(e.target.value)} />
                 <p hidden={mal}>Las contraseñas no coinciden</p>
                 <div className='d-grid col-10 mx-auto'>
-                  <button className='btn btn-dark' onClick={(e) => validarContrasena(e)}>
+                  <button className='btn btn-dark'>
                     <i className='fa-solid fa-door-open'></i> Register
                   </button>
                 </div>
