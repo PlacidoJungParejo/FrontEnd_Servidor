@@ -45,12 +45,15 @@ const Users = () => {
         <table className="table table-bordered">
           <thead>
             <tr>
+              <th>ID</th>
               <th>USUARIO</th>
               <th>NOMBRE</th>
               <th>APELLIDO</th>
               <th>EMAIL</th>
+              {storage.get("authUser").profile == "ADMIN" &&
+              <th></th>&&
               <th></th>
-              <th></th>
+              }
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -62,7 +65,9 @@ const Users = () => {
                 <td>{usuario.firstName}</td>
                 <td>{usuario.lastName}</td>
                 <td>{usuario.email}</td>
-                <td>
+                {storage.get("authUser").profile == "ADMIN" &&
+                  <>
+                  <td>
                   <Link to={"/users/edit/" + usuario.idUser} className="btn btn-warning">
                     <i className="fa-solid fa-edit"></i>
                   </Link>
@@ -74,6 +79,15 @@ const Users = () => {
                   >
                     <i className="fa-solid fa-trash"></i>
                   </button>
+                </td>
+                  </>
+                  
+                }
+
+                <td>
+                  <Link to={"/users/edit/" + usuario.idUser} className="btn btn-success">
+                    <i className="fas fa-eye"></i>
+                  </Link>
                 </td>
               </tr>
             ))}

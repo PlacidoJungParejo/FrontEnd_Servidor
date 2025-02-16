@@ -3,6 +3,7 @@ import Nav from './Components/Nav';
 import Company from "./Views/Company/Index";
 import CreateCompany from "./Views/Company/Create";
 import EditCompany from "./Views/Company/Edit";
+import ViewCompany from "./Views/Company/View"
 import Users from "./Views/Users/Index";
 import CreateUsers from "./Views/Users/Create";
 import EditUsers from "./Views/Users/Edit";
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<Inscriptions />} />
           <Route path="company/create" element={<CreateCompany />} />
           <Route path="company/edit/:id" element={<EditCompany />} />
+          <Route path="company/view/:id" element={<ViewCompany />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/create" element={<CreateUsers />} />
           <Route path="/users/edit/:id" element={<EditUsers />} />

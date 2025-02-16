@@ -81,8 +81,10 @@ const Inscripciones = () => {
               <th>USUARIO</th>
               <th>FECHA EXPIRACIÓN</th>
               <th>OBSERVACIONES</th>
+              {storage.get("authUser").profile == "ADMIN" &&
+              <th></th> &&
               <th></th>
-              <th></th>
+            }
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -94,11 +96,12 @@ const Inscripciones = () => {
                 <td>{inscripcion.user.firstName} {inscripcion.user.lastName} - {inscripcion.user.nif}</td>
                 <td>{inscripcion.FecFin ? inscripcion.FecFin : "No especificada"}</td>
                 <td>{inscripcion.Observaciones}</td>
+                {storage.get("authUser").profile == "ADMIN" &&
                 <td>
                   <Link to={"/edit/" + inscripcion.id} className="btn btn-warning">
                     <i className="fa-solid fa-edit"></i>
                   </Link>
-                </td>
+                </td> &&
                 <td>
                   <button
                     className="btn btn-danger"
@@ -107,6 +110,7 @@ const Inscripciones = () => {
                     <i className="fa-solid fa-trash"></i>
                   </button>
                 </td>
+                }
               </tr>
             ))}
           </tbody>

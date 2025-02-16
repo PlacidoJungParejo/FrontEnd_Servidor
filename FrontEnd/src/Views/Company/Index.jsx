@@ -50,8 +50,10 @@ const Empresas = () => {
               <th>CIUDAD</th>
               <th>TIPO</th>
               <th>RESPONSABLE</th>
+              {storage.get("authUser").profile == "ADMIN" &&
+              <th></th> &&
               <th></th>
-              <th></th>
+              }
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -62,8 +64,10 @@ const Empresas = () => {
                 <td>{empresa.city}</td>
                 <td>{empresa.type}</td>
                 <td>{empresa.personInCharge}</td>
+                {storage.get("authUser").profile == "ADMIN" && 
+                <>
                 <td>
-                  <Link to={"/edit/" + empresa._id} className="btn btn-warning">
+                  <Link to={"/company/edit/" + empresa._id} className="btn btn-warning">
                     <i className="fa-solid fa-edit"></i>
                   </Link>
                 </td>
@@ -75,6 +79,14 @@ const Empresas = () => {
                     <i className="fa-solid fa-trash"></i>
                   </button>
                 </td>
+                </>
+                }
+                <td>
+                  <Link to={"/company/view/" + empresa._id} className="btn btn-success">
+                    <i className="fas fa-eye"></i>
+                  </Link>
+                </td>
+                
               </tr>
             ))}
           </tbody>
