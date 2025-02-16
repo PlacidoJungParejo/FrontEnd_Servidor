@@ -4,6 +4,8 @@ import Company from "./Views/Company/Index";
 import CreateCompany from "./Views/Company/Create";
 import EditCompany from "./Views/Company/Edit";
 import Users from "./Views/Users/Index";
+import CreateUsers from "./Views/Users/Create";
+import EditUsers from "./Views/Users/Edit";
 import Login from './Views/Login'
 import Register from './Views/Register'
 import ProtectedRoutes from './Components/ProtectedRoutes'
@@ -26,6 +28,8 @@ function App() {
           <Route path="company/create" element={<CreateCompany />} />
           <Route path="/edit/:id" element={<EditCompany />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/users/create" element={<CreateUsers />} />
+          <Route path="/users/edit/:id" element={<EditUsers />} />
         </Route>
       </Routes>
     </BrowserRouter>
