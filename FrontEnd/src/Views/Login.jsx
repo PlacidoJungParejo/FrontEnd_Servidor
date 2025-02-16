@@ -15,7 +15,7 @@ const Login = () => {
     // Depuración: Ver qué se envía al backend
     console.log("Enviando datos:", form); 
 
-    const res = await sendRequest('POST', form, '/users/CSR/login', '', false);
+    const res = await sendRequest('POST', form, '/users/CSR/login', '', false, "Iniciado sesión Correctamente");
 
     // Depuración: Ver qué responde el backend
     console.log("Respuesta del backend:", res.data);

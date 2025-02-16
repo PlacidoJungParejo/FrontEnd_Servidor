@@ -8,7 +8,7 @@ export const show_alerta = (msj,icon) =>{
 import axios from "axios";
 
 
-export const sendRequest = async (method, params, url, redir = '', token = true) => {
+export const sendRequest = async (method, params, url, redir = '', token = true, mensaje) => {
     let res;
     try {
         if (token) {
@@ -24,10 +24,9 @@ export const sendRequest = async (method, params, url, redir = '', token = true)
         });
 
         res = response.data;
-        console.log(response.data);
         if (method !== 'GET') {
             console.log("asd");
-            show_alerta(response.data.message, 'success');
+            show_alerta(mensaje, 'success');
         }
 
         // Redirige si es necesario
