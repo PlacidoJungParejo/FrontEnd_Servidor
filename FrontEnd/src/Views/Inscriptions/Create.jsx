@@ -1,10 +1,10 @@
 import React from 'react'
-import FormDep from '../../Components/FormDep'
+import FormIns from '../../Components/FormIns'
 
 const Create = () => {
   return (
     <div>
-      <FormDep id={null} title='Crear inscripcion'></FormDep>
+      <FormIns id={null} title='Crear inscripcion'></FormIns>
     </div>
   )
 }
