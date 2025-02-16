@@ -1,10 +1,11 @@
 import React from 'react'
-import FormDep from '../../Components/FormDep'
+import FormDep from '../../Components/FormCompany'
+import FormUser from '../../Components/FormUser'
 
 const Create = () => {
   return (
     <div>
-      <FormDep title='Crear Usuario' Create={true} type={"Usuarios"} />
+      <FormUser title='Crear Usuario' Create={true} type={"Usuarios"} />
     </div>
   )
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import FormDep from '../../Components/FormDep';
+import FormCompany from '../../Components/FormCompany';
 
 const Create = () => {
   return (
     <div>
-      <FormDep title='Crear Compañía' Create={true} type={"Compañia"} />
+      <FormCompany title='Crear Compañía' Create={true} type={"Compañia"} />
     </div>
   );
 };

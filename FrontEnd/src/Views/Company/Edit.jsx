@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import FormDep from '../../Components/FormDep';
+import FormCompany from '../../Components/FormCompany';
 import DivAdd from '../../Components/DivAdd';
 
 
@@ -13,7 +13,7 @@ const Edit = () => {
           <i className="fa-solid fa-arrow-left"></i> Volver
         </Link>
       </DivAdd>
-      <FormDep id={id} title='Editar Compañía' type={"Compañia"} />
+      <FormCompany id={id} title='Editar Compañía' type={"Compañia"} />
     </div>
   );
 };
