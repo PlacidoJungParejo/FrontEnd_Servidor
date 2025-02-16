@@ -7,7 +7,7 @@ import storage from '../Storage/storage'
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('')
-  const [contraMal, setContraMal] = useState("")
+  const [contraMal, setContraMal] = useState(true)
   const go = useNavigate();
   const login = async (e) => {
     e.preventDefault();
@@ -74,7 +74,6 @@ function validarContrasena(e) {
     setContraMal(false)
   }
 }
-
   return (
     <div className='container-fluid'>
       <div className="row mt-5">

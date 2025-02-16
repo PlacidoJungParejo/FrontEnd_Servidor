@@ -37,8 +37,6 @@ const Register = () => {
   }
 
   function validarContrasena(e) {
-    setPassword(e.target.value)
-    console.log(e.target.value)
 
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&]{8,}$/;
     if(regex.test(e.target.value)){
