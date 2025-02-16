@@ -7,6 +7,7 @@ import storage from '../Storage/storage'
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('')
+  const [contraMal, setContraMal] = useState("")
   const go = useNavigate();
   const login = async (e) => {
     e.preventDefault();
@@ -62,6 +63,18 @@ const logout = async () => {
   }
 };
 
+function validarContrasena(e) {
+  setPassword(e.target.value)
+
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&]{8,}$/;
+  if(regex.test(e.target.value)){
+    setContraMal(true)
+  }else{
+    e.preventDefault()
+    setContraMal(false)
+  }
+}
+
   return (
     <div className='container-fluid'>
       <div className="row mt-5">
@@ -73,7 +86,8 @@ const logout = async () => {
             <div className='card-body'>
               <form onSubmit={login}>
                 <DivInput type='text' icon='fa-at' value={username} className='form-control' placeholder='Username...' required='required' handleChange={(e) => setUsername(e.target.value)} />
-                <DivInput type='password' icon='fa-key' value={password} className='form-control' placeholder='Password' required='required' handleChange={(e) => setPassword(e.target.value)} />
+                <DivInput type='password' icon='fa-key' value={password} className='form-control' placeholder='Password' required='required' handleChange={(e) => validarContrasena(e)} />
+                <p hidden={contraMal}>La contraseña debe contener al menos 8 carácteres y al menos 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial</p>
                 <div className='d-grid col-10 mx-auto'>
                   <button className='btn btn-dark'>
                     <i className='fa-solid fa-door-open'></i> Login

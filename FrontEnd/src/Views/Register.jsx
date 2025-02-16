@@ -12,6 +12,7 @@ const Register = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [mal, setMal] = useState(true)
+  const [contraMal, setContraMal] = useState(true)
   const go = useNavigate();
   const register = async (e) => {
     if(password === repeat){
@@ -31,6 +32,18 @@ const Register = () => {
     }
     
   }
+
+  function validarContrasena(e) {
+    setPassword(e.target.value)
+
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&]{8,}$/;
+    if(regex.test(e.target.value)){
+      setContraMal(true)
+    }else{
+      e.preventDefault()
+      setContraMal(false)
+    }
+  }
   return (
     <div className='container-fluid'>
       <div className="row mt-5">
@@ -46,11 +59,12 @@ const Register = () => {
                 <DivInput type='text' icon='fa-user' value={firstName} className='form-control' placeholder='First name' required='required' handleChange={(e) => setFirstName(e.target.value)} />
                 <DivInput type='text' icon='fa-user' value={lastName} className='form-control' placeholder='Last name' required='required' handleChange={(e) => setLastName(e.target.value)} />
                 <DivInput type='email' icon='fa-at' value={email} className='form-control' placeholder='Email' required='required' handleChange={(e) => setEmail(e.target.value)} />
-                <DivInput type='password' icon='fa-key' value={password} className='form-control' placeholder='Password' required='required' handleChange={(e) => setPassword(e.target.value)} />
+                <DivInput type='password' icon='fa-key' value={password} className='form-control' placeholder='Password' required='required' handleChange={(e) => validarContrasena(e)} />
+                <p hidden={contraMal}>La contraseña debe contener al menos 8 carácteres y al menos 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial</p>
                 <DivInput type='password' icon='fa-key' value={repeat} className='form-control' placeholder='Repeat password' required='required' handleChange={(e) => setRepeat(e.target.value)} />
                 <p hidden={mal}>Las contraseñas no coinciden</p>
                 <div className='d-grid col-10 mx-auto'>
-                  <button className='btn btn-dark'>
+                  <button className='btn btn-dark' onClick={(e) => validarContrasena(e)}>
                     <i className='fa-solid fa-door-open'></i> Register
                   </button>
                 </div>

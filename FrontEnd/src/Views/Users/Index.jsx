@@ -1,165 +1,87 @@
-import React,{useEffect,useState,useRef} from 'react';
-import DivAdd from '../../Components/DivAdd';
-import DivTable from '../../Components/DivTable';
-import DivSelect from '../../Components/DivSelect';
-import DivInput from '../../Components/DivInput';
-import Modal from '../../Components/Modal';
-import { confirmation, sendRequest } from '../../functions';
-import { PaginationControl } from 'react-bootstrap-pagination-control';
+import React, { useEffect, useState } from "react";
+import DivAdd from "../../Components/DivAdd";
+import DivTable from "../../Components/DivTable";
+import { Link } from "react-router-dom";
+import { confirmation, sendRequest } from "../../functions";
+import storage from "../../Storage/storage";
 
 const Users = () => {
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState([]);
+  const [classLoad, setClassLoad] = useState("");
+  const [classTable, setClassTable] = useState("d-none");
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   const getUsers = async () => {
-    const res = await sendRequest("GET", "", "", "")
-    console.log(res)
-  }
+    const res = await sendRequest("GET", "", "/users/CSR", "");
+    console.log(res);
+  
+    if (res) {
+      setUsers(res);
+    } else {
+      setUsers([]); // Evitar errores si la API no devuelve datos correctos
+    }
+    setClassTable("");
+    setClassLoad("d-none");
+  };
+  
 
-  getUsers()
-  // const [id,setId] = useState('')
-  // const [name,setName] = useState('')
-  // const [email,setEmail] = useState('')
-  // const [phone,setPhone] = useState('')
-  // const [operation,setOperation] = useState('')
-  // const [title,setTitle] = useState('')
-  // const [departmentId,setDepartmentId] = useState('')
-  // const [Company,setCompany] = useState([])
-  // const [classLoad,setClassLoad] = useState('')
-  // const [classTable,setClassTable] = useState('d-none')
-  // const [rows,setRows] = useState(0)
-  // const [page,setPage] = useState(1)
-  // const [pageSize,setPageSize] = useState(0)
-  // const NameInput = useRef();
-  // const close = useRef();
-  // let method = '';
-  // let url = '';
-  // useEffect(()=>{
-  //   getUsers(1);
-  //   getCompany()
-  // },[]);
-  // const getUsers = async (page) => {
-  //   const res = await sendRequest('GET','','/api/v4/users?page='+page,'');
-  //   setUsers(res.data);
-  //   setRows(res.total);
-  //   setPageSize(res.per_page);
-  //   setClassTable('');
-  //   setClassLoad('d-none')
-  // }
-  // const getDepartment = async () => {
-  //   const res = await sendRequest('GET','','/api/Company','');
-  //   setCompany(res);
-  // }
-  // const deleteEmployee = (id,name) => {
-  //   confirmation(name,'/api/users/'+id,'users')
-  // }
-  // const clear = () =>{
-  //   setName('');
-  //   setEmail('');
-  //   setPhone('');
-  //   setDepartmentId(1);
-  // }
-  // const openModal = (op,n,e,p,d,em) =>  {
-  //   clear();
-  //   setTimeout( ()=> NameInput.current.focus(),600);
-  //   setOperation(op);
-  //   setId(em);
-  //   if (op == 1) {
-  //     setTitle('Create employee');
-  //   }
-  //   else{
-  //     setTitle('Update employee');
-  //     setName(n);
-  //     setEmail(e);
-  //     setPhone(p);
-  //     setDepartmentId(d);
-  //   }
-  // }
-  // const save = async(e) => {
-  //   e.preventDefault();
-  //   if (operation == 1) {
-  //     method = 'POST';
-  //     url = 'api/users'
-  //   }
-  //   else{
-  //     method = 'PUT';
-  //     url = '/api/users/'+id;
-  //   }
-  //   const form = {name:name,email:email,phone:phone,department_id:departmentId};
-  //   const res = await sendRequest(method,form,url,'');
-  //   if (method == 'PUT' && res.status == true) {
-  //     close.current.click();
-  //   }
-  //   if (res.status == true) {
-  //     clear();
-  //     getUsers(page)
-  //     setTimeout( ()=> NameInput.current.focus(),3000)
-  //   }
-  // }
-  // const goPage = (p) => {
-  //   setPage(p);
-  //   getUsers(p);
-  // }
+  const deleteUsers = (id, name) => {
+    confirmation(name, "/users/CSR/" + id);
+  };
+
   return (
-    <div className='container-fluid'>
-      <h1>hola</h1>
-      {/* <DivAdd>
-        <button className='btn btn-dark' data-bs-toggle='modal' data-bs-formTarget='#modalEmployees' onClick={()=>openModal(1)}>
-          <i className='fa-solid fa-circle-plus'></i> Add
-        </button>
+    <div className="container-fluid">
+      <DivAdd>
+        {storage.get("authUser").profile == "ADMIN" &&
+        <Link to="create" className="btn btn-dark">
+          <i className="fa-solid fa-circle-plus"></i> Add
+        </Link>
+        }
       </DivAdd>
-      <DivTable col='10' off='1' classLoad={classLoad} classTable={classTable}>
-        <table className='table table-bordered'>
-          <thead><tr>
-            <th>#</th>
-            <th>NAME</th>
-            <th>EMAIL</th>
-            <th>PHONE</th>
-            <th>DEPARTMENT</th>
-            <th></th>
-            <th></th>
-            </tr></thead>
-          <tbody className='table-group-divider'>
-            {users.map((row,i)=>(
-              <tr key={row.id}>
-                <td>{(i+1)}</td>
-                <td>{row.name}</td>
-                <td>{row.email}</td>
-                <td>{row.phone}</td>
-                <td>{row.department}</td>
+      <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
+        <table className="table table-bordered">
+          <thead>
+            <tr>
+              <th>USUARIO</th>
+              <th>NOMBRE</th>
+              <th>APELLIDO</th>
+              <th>EMAIL</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody className="table-group-divider">
+            {console.log("Usuarios" +users)}
+            {users.map((usuario, i) => (
+              <tr key={usuario.idUser}>
+                <td>{i + 1}</td>
+                <td>{usuario.username}</td>
+                <td>{usuario.firstName}</td>
+                <td>{usuario.lastName}</td>
+                <td>{usuario.email}</td>
                 <td>
-                  <button className='btn btn-warning' data-bs-toggle='modal' data-bs-formTarget='#modalUsers' onClick={()=>openModal(2,row.name,row.email,row.phone,row.department_id,row.id)}>
-                    <i className='fa-solid fa-edit'></i>
-                  </button>
+                  <Link to={"/users/edit/" + usuario.idUser} className="btn btn-warning">
+                    <i className="fa-solid fa-edit"></i>
+                  </Link>
                 </td>
                 <td>
-                  <button className='btn btn-danger' onClick={() => deleteEmployee(row.id,row.name)}>
-                    <i className='fa-solid fa-trash'></i>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => deleteUsers(usuario.idUser, usuario.username)}
+                  >
+                    <i className="fa-solid fa-trash"></i>
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <PaginationControl changePage={page => goPage(page)} next={true} limit={pageSize} page={page} total={rows} />
       </DivTable>
-      <Modal title={title} modal='modalUsers'>
-        <div className='modal-body'>
-          <form onSubmit={save}>
-            <DivInput type='text' icon='fa-user' value={name} className='form-control' placeholder='Name' required='required' ref={NameInput} handleChange={(e) => setName(e.target.value)} />
-            <DivInput type='email' icon='fa-at' value={email} className='form-control' placeholder='Email' required='required' handleChange={(e) => setEmail(e.target.value)} />
-            <DivInput type='phone' icon='fa-phone' value={phone} className='form-control' placeholder='Phone' required='required' handleChange={(e) => setPhone(e.target.value)} />
-            <DivSelect icon='fa-building' value={departmentId} className='form-select' options={Company} handleChange={(e) => setDepartmentId(e.target.value)} />
-            <button className='btn btn-success'>
-              <i className='fa.solid fa-save'></i> Save
-            </button>
-          </form>
-        </div>
-        <div className='modal-footer'>
-            <button className='btn btn-dark' data-bs-dimiss='modal' ref={close}>Close</button>
-        </div>
-      </Modal> */}
     </div>
-  )
-}
+  );
+};
 
-export default Users
+export default Users;
