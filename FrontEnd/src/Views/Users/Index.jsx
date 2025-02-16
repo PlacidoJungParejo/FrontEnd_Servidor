@@ -23,7 +23,7 @@ const Users = () => {
   // const [operation,setOperation] = useState('')
   // const [title,setTitle] = useState('')
   // const [departmentId,setDepartmentId] = useState('')
-  // const [departments,setDepartments] = useState([])
+  // const [Company,setCompany] = useState([])
   // const [classLoad,setClassLoad] = useState('')
   // const [classTable,setClassTable] = useState('d-none')
   // const [rows,setRows] = useState(0)
@@ -35,7 +35,7 @@ const Users = () => {
   // let url = '';
   // useEffect(()=>{
   //   getUsers(1);
-  //   getDepartments()
+  //   getCompany()
   // },[]);
   // const getUsers = async (page) => {
   //   const res = await sendRequest('GET','','/api/v4/users?page='+page,'');
@@ -46,8 +46,8 @@ const Users = () => {
   //   setClassLoad('d-none')
   // }
   // const getDepartment = async () => {
-  //   const res = await sendRequest('GET','','/api/departments','');
-  //   setDepartments(res);
+  //   const res = await sendRequest('GET','','/api/Company','');
+  //   setCompany(res);
   // }
   // const deleteEmployee = (id,name) => {
   //   confirmation(name,'/api/users/'+id,'users')
@@ -148,7 +148,7 @@ const Users = () => {
             <DivInput type='text' icon='fa-user' value={name} className='form-control' placeholder='Name' required='required' ref={NameInput} handleChange={(e) => setName(e.target.value)} />
             <DivInput type='email' icon='fa-at' value={email} className='form-control' placeholder='Email' required='required' handleChange={(e) => setEmail(e.target.value)} />
             <DivInput type='phone' icon='fa-phone' value={phone} className='form-control' placeholder='Phone' required='required' handleChange={(e) => setPhone(e.target.value)} />
-            <DivSelect icon='fa-building' value={departmentId} className='form-select' options={departments} handleChange={(e) => setDepartmentId(e.target.value)} />
+            <DivSelect icon='fa-building' value={departmentId} className='form-select' options={Company} handleChange={(e) => setDepartmentId(e.target.value)} />
             <button className='btn btn-success'>
               <i className='fa.solid fa-save'></i> Save
             </button>

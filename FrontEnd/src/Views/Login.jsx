@@ -24,7 +24,7 @@ const Login = () => {
     if (res.data != undefined) {
         storage.set('authToken', res.token);
         storage.set('authUser', res.data);
-        go("/inscription")
+        go("/company")
     } else {
         show_alerta("Error al iniciar sesion, credenciales inválidas", "error")
         console.error("Error al iniciar sesion, credenciales inválidas");

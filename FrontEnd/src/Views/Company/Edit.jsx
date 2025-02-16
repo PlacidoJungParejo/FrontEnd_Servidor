@@ -6,7 +6,7 @@ const Edit = () => {
   const {id} = useParams();
   return (
     <div>
-      <FormDep id={id} title='Edit Department'></FormDep>
+      <FormDep id={id} title='Editar Company'></FormDep>
     </div>
   )
 }

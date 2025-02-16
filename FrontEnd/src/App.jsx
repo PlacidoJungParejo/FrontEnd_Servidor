@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from './Components/Nav';
-import Departments from "./Views/Departments/Index";
-import CreateDepartments from "./Views/Departments/Create";
-import EditDepartments from "./Views/Departments/Edit";
+import Company from "./Views/Company/Index";
+import CreateCompany from "./Views/Company/Create";
+import EditCompany from "./Views/Company/Edit";
 import Users from "./Views/Users/Index";
 import Login from './Views/Login'
 import Register from './Views/Register'
@@ -16,14 +16,15 @@ function App() {
     <BrowserRouter>
       <Nav />
       <Routes>
+        <Route path="/company" element={<Company />} />
         <Route path="/inscription" element={<Inscriptions />} />
         <Route path="/inscription/create" element={<CreateInscription />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<Inscriptions />} />
-          <Route path="/create" element={<CreateDepartments />} />
-          <Route path="/edit/:id" element={<EditDepartments />} />
+          <Route path="company/create" element={<CreateCompany />} />
+          <Route path="/edit/:id" element={<EditCompany />} />
           <Route path="/users" element={<Users />} />
         </Route>
       </Routes>

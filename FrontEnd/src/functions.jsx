@@ -24,7 +24,9 @@ export const sendRequest = async (method, params, url, redir = '', token = true)
         });
 
         res = response.data;
+        console.log(response.data);
         if (method !== 'GET') {
+            console.log("asd");
             show_alerta(response.data.message, 'success');
         }
 

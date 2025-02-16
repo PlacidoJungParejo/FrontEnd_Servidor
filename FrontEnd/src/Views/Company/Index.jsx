@@ -5,29 +5,30 @@ import { Link } from "react-router-dom";
 import { confirmation, sendRequest } from "../../functions";
 
 const Inscripciones = () => {
-  const [inscripciones, setInscripciones] = useState([]);
+  const [empresas, setEmpresas] = useState([]);
   const [classLoad, setClassLoad] = useState("");
   const [classTable, setClassTable] = useState("d-none");
 
   useEffect(() => {
-    getInscripciones();
+    getEmpresas();
   }, []);
 
-  const getInscripciones = async () => {
-    const res = await sendRequest("GET", "", "/inscription/CSR", "");
+  const getEmpresas = async () => {
+    const res = await sendRequest("GET", "", "/company/CSR", "");
     console.log(res);
-
-    if (res && res.Inscripciones) {
-      setInscripciones(res.Inscripciones);
-    } else {  
-      setInscripciones([]); // Evitar errores si la API no devuelve datos correctos
+  
+    if (res && res.empresas) {
+      setEmpresas(res.empresas);
+    } else {
+      setEmpresas([]); // Evitar errores si la API no devuelve datos correctos
     }
     setClassTable("");
     setClassLoad("d-none");
   };
+  
 
-  const deleteInscripcion = (id, name) => {
-    confirmation(name, "/inscription/CSR/" + id);
+  const deleteEmpresa = (id, name) => {
+    confirmation(name, "/company/CSR/" + id);
   };
 
   return (
@@ -42,33 +43,31 @@ const Inscripciones = () => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>FECHA DE INICIO</th>
-              <th>COMPAÑÍA</th>
-              <th>USUARIO</th>
-              <th>FECHA EXPIRACIÓN</th>
-              <th>OBSERVACIONES</th>
+              <th>NOMBRE</th>
+              <th>CIUDAD</th>
+              <th>TIPO</th>
+              <th>RESPONSABLE</th>
               <th></th>
               <th></th>
             </tr>
           </thead>
           <tbody className="table-group-divider">
-            {inscripciones.map((inscripcion, i) => (
-              <tr key={inscripcion._id}>
+            {empresas.map((empresa, i) => (
+              <tr key={empresa._id}>
                 <td>{i + 1}</td>
-                <td>{inscripcion.FecIni}</td>
-                <td>{inscripcion.company.name} - {inscripcion.company.cif}</td>
-                <td>{inscripcion.user.firstName} {inscripcion.user.lastName} - {inscripcion.user.nif}</td>
-                <td>{inscripcion.FecFin ? inscripcion.FecFin : "No especificada"}</td>
-                <td>{inscripcion.Observaciones}</td>
+                <td>{empresa.name}</td>
+                <td>{empresa.city}</td>
+                <td>{empresa.type}</td>
+                <td>{empresa.personInCharge}</td>
                 <td>
-                  <Link to={"/edit/" + inscripcion._id} className="btn btn-warning">
+                  <Link to={"/edit/" + empresa._id} className="btn btn-warning">
                     <i className="fa-solid fa-edit"></i>
                   </Link>
                 </td>
                 <td>
                   <button
                     className="btn btn-danger"
-                    onClick={() => deleteInscripcion(inscripcion._id, inscripcion.name)}
+                    onClick={() => deleteEmpresa(empresa._id, empresa.name)}
                   >
                     <i className="fa-solid fa-trash"></i>
                   </button>
