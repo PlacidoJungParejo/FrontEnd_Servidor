@@ -24,7 +24,7 @@ function App() {
         <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<Inscriptions />} />
           <Route path="company/create" element={<CreateCompany />} />
-          <Route path="/edit/:id" element={<EditCompany />} />
+          <Route path="company/edit/:id" element={<EditCompany />} />
           <Route path="/users" element={<Users />} />
         </Route>
       </Routes>

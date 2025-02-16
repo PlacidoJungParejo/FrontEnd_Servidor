@@ -3,6 +3,7 @@ import DivAdd from "../../Components/DivAdd";
 import DivTable from "../../Components/DivTable";
 import { Link } from "react-router-dom";
 import { confirmation, sendRequest } from "../../functions";
+import storage from "../../Storage/storage";
 
 const Empresas = () => {
   const [empresas, setEmpresas] = useState([]);
