@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { sendRequest } from '../functions';
 import DivInput from './DivInput';
+import DivSelect from './DivSelect';
 
 const FormIns = ({ id, title }) => {
     const [idUser, setIdUser] = useState('');
@@ -8,12 +9,14 @@ const FormIns = ({ id, title }) => {
     const [fecIni, setFecIni] = useState('');
     const [fecFin, setFecFin] = useState('');
     const [observaciones, setObservaciones] = useState('');
-
+    const [usuarios, setUsuarios] = useState([]);
+    const [empresas, setEmpresas] = useState([]);
 
     useEffect(() => {
         if (id) {
             getInscription();
         }
+        getUsuariosAndEmpresas();
     }, [id]);
 
     const getInscription = async () => {
@@ -29,31 +32,50 @@ const FormIns = ({ id, title }) => {
         }
     };
 
+    const getUsuariosAndEmpresas = async () => {
+        const [usuariosRes, empresasRes] = await Promise.all([
+            sendRequest('GET', '', '/users/CSR', '', true, "Usuarios obtenidos correctamente"),
+            sendRequest('GET', '', '/company/CSR', '', true, "Empresas obtenidas correctamente")
+        ]);
+
+        // Asumiendo que las respuestas contienen las listas correspondientes
+        if (usuariosRes && Array.isArray(usuariosRes)) {
+            setUsuarios(usuariosRes);
+        }
+
+        if (empresasRes && empresasRes.empresas) {
+            setEmpresas(empresasRes.empresas);
+        }
+    };
+
     const save = async (e) => {
         e.preventDefault();
         let method = id ? 'PATCH' : 'POST';
         let url = id ? `/inscription/CSR/${id}` : '/inscription/CSR';
         let mensaje = id ? "Inscripción actualizada correctamente" : "Inscripción creada correctamente";
-
-        const data = {
-            idUser,
-            idEmpresa,
-            fecIni,
-            fecFin,
-            observaciones
+    
+        // Función para transformar la fecha en formato DD/MM/YYYY
+        const formatDate = (date) => {
+            const [year, month, day] = date.split('-');
+            return `${day}/${month}/${year}`;
         };
-
+    
+        const data = {
+            IdUser: idUser,
+            IdCompany: idEmpresa,
+            FecIni: formatDate(fecIni), // Transformar la fecha de inicio
+            FecFin: formatDate(fecFin), // Transformar la fecha de fin
+            Observaciones: observaciones
+        };
+    
+        // Agregar el console.log para ver cómo se están enviando los datos
+        console.log("Datos a enviar:", data);
+    
         const res = await sendRequest(method, data, url, '', true, mensaje);
         console.log("Respuesta de save:", res);
 
-        if (res.status === true) {
-            setIdUser('');
-            setIdEmpresa('');
-            setFecIni('');
-            setFecFin('');
-            setObservaciones('');
-        }
     };
+    
 
     return (
         <div className='container-fluid'>
@@ -65,7 +87,8 @@ const FormIns = ({ id, title }) => {
                         </div>
                         <div className='card-body'>
                             <form onSubmit={save}>
-                                <DivInput 
+                                {/* Select para usuarios */}
+                                <DivSelect 
                                     type='number' 
                                     icon='fa-id-card' 
                                     value={idUser} 
@@ -73,8 +96,11 @@ const FormIns = ({ id, title }) => {
                                     placeholder='ID Usuario' 
                                     required 
                                     handleChange={(e) => setIdUser(e.target.value)} 
+                                    options={usuarios.map(user => ({ label: `${user.firstName} ${user.lastName}`, value: user.idUser }))} 
                                 />
-                                <DivInput 
+                                
+                                {/* Select para empresas */}
+                                <DivSelect 
                                     type='text' 
                                     icon='fa-building' 
                                     value={idEmpresa} 
@@ -82,7 +108,10 @@ const FormIns = ({ id, title }) => {
                                     placeholder='ID Empresa' 
                                     required 
                                     handleChange={(e) => setIdEmpresa(e.target.value)} 
+                                    options={empresas.map(empresa => ({ label: empresa.name, value: empresa._id }))} 
                                 />
+                                
+                                {/* Otros campos */}
                                 <DivInput 
                                     type='date' 
                                     icon='fa-calendar-days' 

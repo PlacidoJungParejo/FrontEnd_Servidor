@@ -73,7 +73,7 @@ const Inscripciones = () => {
     <div className="container-fluid">
       <DivAdd>
         {storage.get("authUser").profile === "ADMIN" && (
-          <Link to="create" className="btn btn-dark">
+          <Link to="/inscription/create/" className="btn btn-dark">
             <i className="fa-solid fa-circle-plus"></i> Add
           </Link>
         )}
