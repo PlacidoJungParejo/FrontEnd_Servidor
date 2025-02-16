@@ -18,10 +18,8 @@ const FormDep = ({ id, title, Create = false , type}) => {
         const [email, setEmail] = useState('');
         const [modifiedDate, setModifiedDate] = useState('');
     
-        const NameInput = useRef();
     
         useEffect(() => {
-            NameInput.current.focus();
             if (id) {
                 getCompañia();
             }
@@ -86,15 +84,18 @@ const FormDep = ({ id, title, Create = false , type}) => {
                                 <form onSubmit={save}>
                                     {!Create ? (
                                         <>
-                                            <DivInput type='text' icon='fa-building' value={name} className='form-control' placeholder='Name' required ref={NameInput} handleChange={(e) => setName(e.target.value)} />
-                                            <DivInput type='text' icon='fa-id-card' value={cif} className='form-control' placeholder='CIF' required handleChange={(e) => setCif(e.target.value)} />
-                                            <DivInput type='text' icon='fa-user' value={personInCharge} className='form-control' placeholder='Person In Charge' required handleChange={(e) => setPersonInCharge(e.target.value)} />
-                                            <DivInput type='text' icon='fa-id-card' value={personInChargeID} className='form-control' placeholder='Person In Charge ID' required handleChange={(e) => setPersonInChargeID(e.target.value)} />
+                                            <DivInput type='text' icon='fa-id-card' value={type} className='form-control' placeholder='Tipo' required handleChange={(e) => setType(e.target.value)} />
+                                            <DivInput type='text' icon='fa-id-card' value={city} className='form-control' placeholder='Ciudad' required handleChange={(e) => setCity(e.target.value)} />
+                                            <DivInput type='text' icon='fa-id-card' value={area} className='form-control' placeholder='Area' required handleChange={(e) => setArea(e.target.value)} />
+                                            <DivInput type='text' icon='fa-id-card' value={postalCode} className='form-control' placeholder='Codigo postal' required handleChange={(e) => setPostalCode(e.target.value)} />
+                                            <DivInput type='text' icon='fa-id-card' value={address} className='form-control' placeholder='Dirección' required handleChange={(e) => setAddress(e.target.value)} />
+                                            <DivInput type='text' icon='fa-id-card' value={phone} className='form-control' placeholder='Teléfono' required handleChange={(e) => setPhone(e.target.value)} />
+                                            <DivInput type='text' icon='fa-id-card' value={email} className='form-control' placeholder='Email' required handleChange={(e) => setEmail(e.target.value)} />
                                         </>
                                     ) : (
                                         <>
                                             <DivInput type='text' icon='fa-industry' value={cif} className='form-control' placeholder='Cif' handleChange={(e) => setCif(e.target.value)} />
-                                            <DivInput type='text' icon='fa-building' value={name} className='form-control' placeholder='Name' required ref={NameInput} handleChange={(e) => setName(e.target.value)} />
+                                            <DivInput type='text' icon='fa-building' value={name} className='form-control' placeholder='Name' required handleChange={(e) => setName(e.target.value)} />
                                             <DivInput type='text' icon='fa-industry' value={type} className='form-control' placeholder='Type' handleChange={(e) => setType(e.target.value)} />
                                             <DivInput type='text' icon='fa-city' value={city} className='form-control' placeholder='City' required handleChange={(e) => setCity(e.target.value)} />
                                             <DivInput type='text' icon='fa-industry' value={personInCharge} className='form-control' placeholder='setPersonInCharge' handleChange={(e) => setPersonInCharge(e.target.value)} />
