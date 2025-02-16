@@ -35,11 +35,13 @@ const Empresas = () => {
   return (
     <div className="container-fluid">
       <DivAdd>
-        <Link to="create" className="btn btn-dark">
-          <i className="fa-solid fa-circle-plus"></i> Add
-        </Link>
+        {storage.get("authUser").profile == "ADMIN" &&
+          <Link to="create" className="btn btn-dark">
+            <i className="fa-solid fa-circle-plus"></i> Add
+          </Link>
+        }
       </DivAdd>
-      <DivTable col="6" off="3" classLoad={classLoad} classTable={classTable}>
+      <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
         <table className="table table-bordered">
           <thead>
             <tr>
