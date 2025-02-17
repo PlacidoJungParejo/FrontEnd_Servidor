@@ -40,6 +40,11 @@ const Empresas = () => {
             <i className="fa-solid fa-circle-plus"></i> Add
           </Link>
         }
+        {storage.get("authUser").profile == "Superadministrador" &&
+          <Link to="create" className="btn btn-dark">
+            <i className="fa-solid fa-circle-plus"></i> Add
+          </Link>
+        }
       </DivAdd>
       <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
         <table className="table table-bordered">
@@ -51,8 +56,18 @@ const Empresas = () => {
               <th>TIPO</th>
               <th>RESPONSABLE</th>
               {storage.get("authUser").profile == "ADMIN" &&
-              <th></th> &&
-              <th></th>
+              <>
+              <th>Editar</th>
+              <th>Eliminar</th>
+              <th>Visualizar</th>
+              </>
+              }
+              {storage.get("authUser").profile == "Superadministrador" &&
+              <>
+              <th>Editar</th>
+              <th>Eliminar</th>
+              <th>Visualizar</th>
+              </>
               }
             </tr>
           </thead>
@@ -65,6 +80,23 @@ const Empresas = () => {
                 <td>{empresa.type}</td>
                 <td>{empresa.personInCharge}</td>
                 {storage.get("authUser").profile == "ADMIN" && 
+                <>
+                <td>
+                  <Link to={"/company/edit/" + empresa._id} className="btn btn-warning">
+                    <i className="fa-solid fa-edit"></i>
+                  </Link>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => deleteEmpresa(empresa._id, empresa.name)}
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+                </>
+                }
+                {storage.get("authUser").profile == "Superadministrador" && 
                 <>
                 <td>
                   <Link to={"/company/edit/" + empresa._id} className="btn btn-warning">

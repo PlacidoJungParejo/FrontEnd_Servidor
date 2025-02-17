@@ -55,7 +55,7 @@ const FormCompany = ({ id, title, Create = false , type}) => {
                 ? { name, cif, city, personInCharge, personInChargeID, type, address, area, postalCode, phone, email }
                 : { name, type, city, address, area, postalCode, phone, email, modifiedDate };
     
-            const res = await sendRequest(method, data, url, '', true, mensaje);
+            const res = await sendRequest(method, data, url, '/company', true, mensaje);
             console.log("Respuesta de save:", res);
             if (res.status === true) {
                 setName('Indefinido');

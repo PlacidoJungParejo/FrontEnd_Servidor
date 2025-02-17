@@ -72,7 +72,12 @@ const Inscripciones = () => {
   return (
     <div className="container-fluid">
       <DivAdd>
-        {storage.get("authUser").profile === "ADMIN" && (
+        {storage.get("authUser").profile == "ADMIN" &&(
+          <Link to="/inscription/create/" className="btn btn-dark">
+            <i className="fa-solid fa-circle-plus"></i> Add
+          </Link>
+        )}
+        {storage.get("authUser").profile == "Superadministrador" &&(
           <Link to="/inscription/create/" className="btn btn-dark">
             <i className="fa-solid fa-circle-plus"></i> Add
           </Link>
@@ -88,10 +93,16 @@ const Inscripciones = () => {
               <th>USUARIO</th>
               <th>FECHA EXPIRACIÓN</th>
               <th>OBSERVACIONES</th>
-              {storage.get("authUser").profile === "ADMIN" && (
+              {storage.get("authUser").profile == "ADMIN" && (
                 <>
-                  <th>Editar</th>
-                  <th>Eliminar</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+                </>
+              )}
+              {storage.get("authUser").profile == "Superadministrador" && (
+                <>
+                <th>Editar</th>
+                <th>Eliminar</th>
                 </>
               )}
             </tr>
@@ -105,7 +116,24 @@ const Inscripciones = () => {
                 <td>{getUserName(inscripcion.IdUser)}</td>
                 <td>{inscripcion.FecFin || "No especificada"}</td>
                 <td>{inscripcion.Observaciones}</td>
-                {storage.get("authUser").profile === "ADMIN" && (
+                {storage.get("authUser").profile == "ADMIN" &&(
+                  <>
+                    <td>
+                      <Link to={`/inscription/edit/${inscripcion._id}`} className="btn btn-warning">
+                        <i className="fa-solid fa-edit"></i>
+                      </Link>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => deleteInscripcion(inscripcion._id, inscripcion.Observaciones)}
+                      >
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                    </td>
+                  </>
+                )}
+                {storage.get("authUser").profile == "Superadministrador" &&(
                   <>
                     <td>
                       <Link to={`/inscription/edit/${inscripcion._id}`} className="btn btn-warning">

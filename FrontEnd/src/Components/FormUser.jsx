@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { sendRequest } from '../functions';
 import DivInput from './DivInput';
-
-const FormUser = ({ id, title, Create = false , type}) => {
+import DivSelect from './DivSelect';
+import { useNavigate, Link } from 'react-router-dom'
+const FormUser = ({ id, title, Create = false , type, Superadministrador = false}) => {
     if (type == "Usuarios"){
+        const go = useNavigate();
+        const [profile, setProfile] = useState('')
         const [nif, setNif] = useState('');
         const [username, setUsername] = useState('');
         const [firstName, setFirstName] = useState('');
@@ -22,6 +25,8 @@ const FormUser = ({ id, title, Create = false , type}) => {
             let res = await sendRequest('GET', '', `/users/CSR/${id}`, '', true, "Datos obtenidos correctamente");
             res = res[0]
             console.log("Respuesta de getUsuarios:", res);
+
+
             if (res) {
                 setNif(res.nif || '');
                 setUsername(res.username || '');
@@ -29,22 +34,28 @@ const FormUser = ({ id, title, Create = false , type}) => {
                 setLastName(res.lastName || '');
                 setEmail(res.email || '');
                 setPassword(res.password || '');
+                setProfile(res.profile || '')
             }
         };
+
+
 
         const save = async (e) => {
             e.preventDefault();
             let method = id ? 'PATCH' : 'POST';
             let url = id ? `/users/CSR/${id}` : '/users/CSR';
             let mensaje = id ? "Datos actualizados correctamente" : "Usuario creado correctamente";
+            
             let data = Create
-                ? { nif, username, firstName, lastName, email, password }
-                : { username, firstName, lastName, email };
-
-            const res = await sendRequest(method, data, url, '', true, mensaje);
-            console.log("Respuesta de save:", res);
+                ? { nif, username, firstName, lastName, email, password, profile }
+                : { username, firstName, lastName, email, profile };
+        
+            console.log("Datos que se envían en la petición:", data);
+        
+            const res = await sendRequest(method, data, url, '/users', true, mensaje);
+            console.log("Respuesta de la API:", res);
         };
-
+        
         return (
             <div className='container-fluid'>
                 <div className='row mt-5'>
@@ -61,6 +72,7 @@ const FormUser = ({ id, title, Create = false , type}) => {
                                             <DivInput type='text' icon='fa-id-card' value={firstName} className='form-control' placeholder='Nombre' required handleChange={(e) => setFirstName(e.target.value)} />
                                             <DivInput type='text' icon='fa-id-card' value={lastName} className='form-control' placeholder='Apellido' required handleChange={(e) => setLastName(e.target.value)} />
                                             <DivInput type='text' icon='fa-id-card' value={email} className='form-control' placeholder='Email' required handleChange={(e) => setEmail(e.target.value)} />
+                                            {Superadministrador && <DivSelect icon='fa-building' value={profile} className='form-control' placeholder='Perfil' handleChange={(e) => setProfile(e.target.value)} options={(([{ label: "Usuario", value: "USER"}, {label: "Administrador", value: "ADMIN"} ]))} />}                                  
                                         </>
                                     ) : (
                                         <>
@@ -69,9 +81,15 @@ const FormUser = ({ id, title, Create = false , type}) => {
                                             <DivInput type='text' icon='fa-industry' value={firstName} className='form-control' placeholder='Nombre' handleChange={(e) => setFirstName(e.target.value)} />
                                             <DivInput type='text' icon='fa-city' value={lastName} className='form-control' placeholder='Apellido' handleChange={(e) => setLastName(e.target.value)} />
                                             <DivInput type='email' icon='fa-industry' value={email} className='form-control' placeholder='Email' handleChange={(e) => setEmail(e.target.value)} />
-                                            <DivInput type='password' icon='fa-industry' value={password} className='form-control' placeholder='Password' handleChange={(e) => setPassword(e.target.value)} />
+                                            <DivInput type='password' icon='fa-industry' value={password} className='form-control' placeholder='Password' handleChange={(e) => setPassword(e.target.value)} /> 
+                                            {Superadministrador && <DivSelect icon='fa-building' value={profile} className='form-control' placeholder='Perfil' handleChange={(e) => setProfile(e.target.value)} options={(([{ label: "Usuario", value: "USER"}, {label: "Administrador", value: "ADMIN"} ]))} />}                                  
+                                  
                                         </>
+                                        
                                     )}
+                                    {
+
+                                    }
                                     <div className='d-grid col-10 mx-auto'>
                                         <button className='btn btn-dark'>
                                             <i className='fa-solid fa-save'></i> Save
