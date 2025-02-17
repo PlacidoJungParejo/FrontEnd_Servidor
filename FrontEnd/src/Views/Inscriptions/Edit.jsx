@@ -6,7 +6,7 @@ const Edit = () => {
   const {id} = useParams();
   return (
     <div>
-      <FormIns id={id} title='Edit Department'></FormIns>
+      <FormIns id={id} title='Editar Inscription'></FormIns>
     </div>
   )
 }

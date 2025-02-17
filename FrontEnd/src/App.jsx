@@ -12,6 +12,7 @@ import Register from './Views/Register'
 import ProtectedRoutes from './Components/ProtectedRoutes'
 import Inscriptions from "./Views/Inscriptions/Index";
 import CreateInscription from "./Views/Inscriptions/Create";
+import EditarInscription from "./Views/Inscriptions/Edit"
 import ViewUser from "./Views/Users/View";
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
           <Route path="/users/view/:id" element={<ViewUser />} />
           <Route path="/inscription" element={<Inscriptions />} />
           <Route path="/inscription/create" element={<CreateInscription />} />
-          <Route path="/inscription/edit/:id" element={<CreateInscription />} />
+          <Route path="/inscription/edit/:id" element={< EditarInscription/>} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
