@@ -49,8 +49,8 @@ const FormUser = ({ id, title, Create = false , type}) => {
             <div className='container-fluid'>
                 <div className='row mt-5'>
                     <div className='col-md-4 offset-md-4'>
-                        <div className='card border border-info'>
-                            <div className='card-header gb-info border border-info'>
+                        <div className='card border border-warning border-3'>
+                            <div className='card-header text-black border border-warning border-2'>
                                 {title}
                             </div>
                             <div className='card-body'>

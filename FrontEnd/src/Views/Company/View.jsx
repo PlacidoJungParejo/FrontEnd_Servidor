@@ -39,20 +39,18 @@ const View = () => {
   return (
     <div className="container-fluid">
         <DivAdd>
-          <Link to="/company" className="btn btn-primary">
+          <Link to="/company" className="btn btn-dark">
             <i className="fa-solid fa-arrow-left"></i> Volver
           </Link>
         </DivAdd>
-      <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
-        <table className="table table-bordered">
+      <DivTable col="2" off="0" classLoad={classLoad} classTable={classTable} >
+        <div className="d-flex align-items-center flex-column">
+          <br />
+        <h2>{empresa.name}</h2>
+        <table className="table border table-bordered border-3 w-50 border-warning text-center ">
           <tbody>
             <tr>
-              <th>ID</th>
-              <td>{empresa._id}</td>
-            </tr>
-            <tr>
-              <th>Nombre</th>
-              <td>{empresa.name}</td>
+              
             </tr>
             <tr>
               <th>Dirección</th>
@@ -104,6 +102,7 @@ const View = () => {
             </tr>
           </tbody>
         </table>
+        </div>        
       </DivTable>
     </div>
   );
