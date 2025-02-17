@@ -61,9 +61,6 @@ const FormIns = ({ id, title, Create = false }) => {
         return `${day}-${month}-${year}`;
     };
     
-    
-    
-
     const getUsuariosAndEmpresas = async () => {
         const [usuariosRes, empresasRes] = await Promise.all([
             sendRequest('GET', '', '/users/CSR', '', true, "Usuarios obtenidos correctamente"),
@@ -84,25 +81,36 @@ const FormIns = ({ id, title, Create = false }) => {
         let method = id ? 'PATCH' : 'POST';
         let url = id ? `/inscription/CSR/${id}` : '/inscription/CSR';
         let mensaje = id ? "Inscripción actualizada correctamente" : "Inscripción creada correctamente";
+        
         console.log(method);
     
-        // Verificamos si es para crear o no
+        // Formatear fecha según sea necesario
         const formattedFecFin = !Create ? formatDateDash(fecFin) : formatDateSlash(fecFin);
-        const formattedFecIni = !Create ? formatDateDash(fecIni) : formatDateSlash(fecIni);
     
-        const data = {
-            IdUser: idUser,
-            IdCompany: idEmpresa,
-            FecIni: formattedFecIni,
-            FecFin: formattedFecFin,
-            Observaciones: observaciones
-        };
+        // Definir la data fuera del condicional
+        let data = {};
+    
+        if (!Create) {
+            data = {
+                FecFin: formattedFecFin || "Fecha desconocida",
+                Observaciones: observaciones
+            };
+        } else {
+            data = {
+                IdUser: idUser,
+                IdCompany: idEmpresa,
+                FecIni: fecIni, 
+                FecFin: formattedFecFin || "Fecha desconocida",
+                Observaciones: observaciones
+            };
+        }
     
         console.log("Datos a enviar:", data);
     
         const res = await sendRequest(method, data, url, '/inscription', true, mensaje);
         console.log("Respuesta de save:", res);
     };
+    
     
     
 
@@ -143,56 +151,56 @@ const FormIns = ({ id, title, Create = false }) => {
                                         </>
                                     ) : (
                                         <>
-                                           <DivSelect 
-                                    icon='fa-id-card' 
-                                    value={idUser} 
-                                    className='form-control' 
-                                    placeholder='ID Usuario' 
-                                    required 
-                                    handleChange={(e) => setIdUser(e.target.value)} 
-                                    options={usuarios.map(user => ({ label: `${user.firstName} ${user.lastName}`, value: user.idUser }))} 
-                                />
-                                <DivSelect 
-                                    icon='fa-building' 
-                                    value={idEmpresa} 
-                                    className='form-control' 
-                                    placeholder='ID Empresa' 
-                                    required 
-                                    handleChange={(e) => setIdEmpresa(e.target.value)} 
-                                    options={empresas.map(empresa => ({ label: empresa.name, value: empresa._id }))} 
-                                />
-                                <DivInput 
-                                    type='date' 
-                                    icon='fa-calendar-days' 
-                                    value={fecIni} 
-                                    className='form-control' 
-                                    placeholder='Fecha Inicio' 
-                                    required 
-                                    handleChange={(e) => setFecIni(e.target.value)} 
-                                />
-                                <DivInput 
-                                    type='date' 
-                                    icon='fa-calendar-days' 
-                                    value={fecFin} 
-                                    className='form-control' 
-                                    placeholder='Fecha Final' 
-                                    handleChange={(e) => setFecFin(e.target.value)} 
-                                />
-                                <DivInput 
-                                    type='text' 
-                                    icon='fa-magnifying-glass' 
-                                    value={observaciones} 
-                                    className='form-control' 
-                                    placeholder='Observaciones' 
-                                    handleChange={(e) => setObservaciones(e.target.value)} 
-                                />
-                                <div className='d-grid col-10 mx-auto'>
-                                    <button className='btn btn-dark'>
-                                        <i className='fa-solid fa-save'></i> Guardar
-                                    </button>
-                                </div>
-                                        </>
-                                    )}
+                                        <DivSelect
+                                            icon='fa-id-card'
+                                            value={idUser}
+                                            className='form-control'
+                                            placeholder='ID Usuario'
+                                            required
+                                            handleChange={(e) => setIdUser(e.target.value)}
+                                            options={usuarios.map(user => ({ label: `${user.firstName} ${user.lastName}`, value: user.idUser }))}
+                                        />
+                                        <DivSelect
+                                            icon='fa-building'
+                                            value={idEmpresa}
+                                            className='form-control'
+                                            placeholder='ID Empresa'
+                                            required
+                                            handleChange={(e) => setIdEmpresa(e.target.value)}
+                                            options={empresas.map(empresa => ({ label: empresa.name, value: empresa._id }))}
+                                        />
+                                        <DivInput
+                                            type='date'
+                                            icon='fa-calendar-days'
+                                            value={fecIni}
+                                            className='form-control'
+                                            placeholder='Fecha Inicio'
+                                            required
+                                            handleChange={(e) => setFecIni(e.target.value)}
+                                        />
+                                        <DivInput
+                                            type='date'
+                                            icon='fa-calendar-days'
+                                            value={fecFin}
+                                            className='form-control'
+                                            placeholder='Fecha Final'
+                                            handleChange={(e) => setFecFin(e.target.value)}
+                                        />
+                                        <DivInput
+                                            type='text'
+                                            icon='fa-magnifying-glass'
+                                            value={observaciones}
+                                            className='form-control'
+                                            placeholder='Observaciones'
+                                            handleChange={(e) => setObservaciones(e.target.value)}
+                                        />
+                                        <div className='d-grid col-10 mx-auto'>
+                                            <button className='btn btn-dark'>
+                                                <i className='fa-solid fa-save'></i> Guardar
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
                                 
                             </form>
                         </div>
