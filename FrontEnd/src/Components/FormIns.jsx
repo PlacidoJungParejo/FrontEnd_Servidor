@@ -58,12 +58,9 @@ const FormIns = ({ id, title, Create = false }) => {
     // Función para convertir la fecha al formato dd-mm-yyyy
     const formatDateDash = (date) => {
         const [year, month, day] = date.split('-');
-        return `${day}-${month}-${year}`;
+        return `${day}/${month}/${year}`;
     };
     
-    
-    
-
     const getUsuariosAndEmpresas = async () => {
         const [usuariosRes, empresasRes] = await Promise.all([
             sendRequest('GET', '', '/users/CSR', '', true, "Usuarios obtenidos correctamente"),
@@ -86,9 +83,9 @@ const FormIns = ({ id, title, Create = false }) => {
         let mensaje = id ? "Inscripción actualizada correctamente" : "Inscripción creada correctamente";
         console.log(method);
     
-        // Verificamos si es para crear o no
-        const formattedFecFin = !Create ? formatDateDash(fecFin) : formatDateSlash(fecFin);
-        const formattedFecIni = !Create ? formatDateDash(fecIni) : formatDateSlash(fecIni);
+        // Convertir las fechas al formato dd/mm/yyyy
+        const formattedFecFin = formatDateSlash(fecFin);
+        const formattedFecIni = formatDateSlash(fecIni);
     
         const data = {
             IdUser: idUser,
@@ -104,8 +101,6 @@ const FormIns = ({ id, title, Create = false }) => {
         console.log("Respuesta de save:", res);
     };
     
-    
-
     return (
         <div className='container-fluid'>
             <div className='row mt-5'>
