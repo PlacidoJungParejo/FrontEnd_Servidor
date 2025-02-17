@@ -58,7 +58,7 @@ const FormIns = ({ id, title, Create = false }) => {
     // Función para convertir la fecha al formato dd-mm-yyyy
     const formatDateDash = (date) => {
         const [year, month, day] = date.split('-');
-        return `${day}-${month}-${year}`;
+        return `${day}/${month}/${year}`;
     };
     
     const getUsuariosAndEmpresas = async () => {
@@ -84,26 +84,17 @@ const FormIns = ({ id, title, Create = false }) => {
         
         console.log(method);
     
-        // Formatear fecha según sea necesario
-        const formattedFecFin = !Create ? formatDateDash(fecFin) : formatDateSlash(fecFin);
+        // Convertir las fechas al formato dd/mm/yyyy
+        const formattedFecFin = formatDateSlash(fecFin);
+        const formattedFecIni = formatDateSlash(fecIni);
     
-        // Definir la data fuera del condicional
-        let data = {};
-    
-        if (!Create) {
-            data = {
-                FecFin: formattedFecFin || "Fecha desconocida",
-                Observaciones: observaciones
-            };
-        } else {
-            data = {
-                IdUser: idUser,
-                IdCompany: idEmpresa,
-                FecIni: fecIni, 
-                FecFin: formattedFecFin || "Fecha desconocida",
-                Observaciones: observaciones
-            };
-        }
+        const data = {
+            IdUser: idUser,
+            IdCompany: idEmpresa,
+            FecIni: formattedFecIni,
+            FecFin: formattedFecFin,
+            Observaciones: observaciones
+        };
     
         console.log("Datos a enviar:", data);
     
@@ -111,9 +102,6 @@ const FormIns = ({ id, title, Create = false }) => {
         console.log("Respuesta de save:", res);
     };
     
-    
-    
-
     return (
         <div className='container-fluid'>
             <div className='row mt-5'>
