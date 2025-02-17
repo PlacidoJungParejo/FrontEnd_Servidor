@@ -22,7 +22,7 @@ const FormIns = ({ id, title, Create = false }) => {
     const getInscription = async () => {
         console.log("Obteniendo inscripción para ID:", id);
         // Obtener todas las inscripciones
-        const res = await sendRequest('GET', '', '/inscription/CSR', '', true, "Datos obtenidos correctamente");
+        const res = await sendRequest('GET', '', '/inscription/CSR', '', true, "Inscripción realizada correctamente");
     
         if (res && Array.isArray(res)) {
             // Filtrar la inscripción correspondiente usando el _id
@@ -85,9 +85,10 @@ const FormIns = ({ id, title, Create = false }) => {
         console.log(method);
     
         // Convertir las fechas al formato dd/mm/yyyy
-        const formattedFecFin = formatDateSlash(fecFin);
+        const formattedFecFin = fecFin === undefined || fecFin === '' || fecFin === "undefined-undefined-Fecha de finalización no definida" ? "Fecha de finalización no definida" : formatDateSlash(fecFin);
         const formattedFecIni = formatDateSlash(fecIni);
-    
+        console.log(fecFin);
+        
         const data = {
             IdUser: idUser,
             IdCompany: idEmpresa,
@@ -98,9 +99,10 @@ const FormIns = ({ id, title, Create = false }) => {
     
         console.log("Datos a enviar:", data);
     
-        const res = await sendRequest(method, data, url, '/inscription', true, mensaje);
+        const res = await sendRequest(method, data, url, '/Inscription', true, mensaje);
         console.log("Respuesta de save:", res);
     };
+    
     
     return (
         <div className='container-fluid'>
