@@ -1,80 +1,85 @@
-import React, { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { sendRequest, show_alerta } from '../functions'
-import DivInput from '../Components/DivInput'
-import storage from '../Storage/storage'
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { sendRequest, show_alerta } from '../functions';
+import DivInput from '../Components/DivInput';
+import storage from '../Storage/storage';
 
 const Login = () => {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('')
-  const [contraMal, setContraMal] = useState(true)
+  const [password, setPassword] = useState('');
+  const [contraMal, setContraMal] = useState(true);
   const go = useNavigate();
+
   const login = async (e) => {
     e.preventDefault();
-    const form = { username: username, password: password };
-    
-    // Depuración: Ver qué se envía al backend
-    console.log("Enviando datos:", form); 
+    const form = { username, password };
 
-    const res = await sendRequest('POST', form, '/users/CSR/login', '', false, "Iniciado sesión Correctamente");
+    const res = await sendRequest('POST', form, '/users/CSR/login', '', false, "Iniciado sesión correctamente");
 
-    // Depuración: Ver qué responde el backend
-    console.log("Respuesta del backend:", res.data);
-
-    console.log(res.data);
-    if (res.data != undefined) {
-        storage.set('authToken', res.token);
-        storage.set('authUser', res.data);
-        storage.set('profile', res.data.profile)
-        go("/company")
+    if (res.data) {
+      storage.set('authToken', res.token);
+      storage.set('authUser', res.data);
+      storage.set('profile', res.data.profile);
+      go("/company");
     } else {
-        show_alerta("Error al iniciar sesion, credenciales inválidas", "error")
-        console.error("Error al iniciar sesion, credenciales inválidas");
+      show_alerta("Error al iniciar sesión, credenciales inválidas", "error");
     }
-};
+  };
 
-const logout = async () => {
-  try {
-    await axios.post(
-      "http://127.0.0.1:3033/api/v4/users/CSR/logout",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${storage.get("authToken")}`,
-          "Content-Type": "application/json"
-        }
-      }
-    );
-
-    if (storage.get("authToken")) {
-      // Redirigir al login
-      go("/login");
-      // Eliminar token correctamente
+  const logout = async () => {
+    try {
+      await sendRequest('POST', {}, '/users/CSR/logout', '', true);
+      
       storage.remove("authToken");
       storage.remove("authUser");
-      setUsername("")
-      setPassword("")
-      show_alerta("Sesión cerrada con éxito", "success")
+      storage.remove("profile");
+      setUsername("");
+      setPassword("");
+      show_alerta("Sesión cerrada con éxito", "success");
+      go("/login");
+    } catch (error) {
+      show_alerta("No se pudo cerrar sesión", "error");
     }
-    
-  } catch (error) {
-    if (!storage.get("authToken")) {
-      show_alerta("No se puede cerrar sesión si no hay una sesión iniciada", "error")
-    }
-  }
-};
+  };
 
-function validarContrasena(e) {
-  setPassword(e.target.value)
+  function validarContrasena(e) {
+    setPassword(e.target.value);
 
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&]{8,}$/;
-  if(regex.test(e.target.value)){
-    setContraMal(true)
-  }else{
-    e.preventDefault()
-    setContraMal(false)
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&]{8,}$/;
+    setContraMal(regex.test(e.target.value));
   }
-}
+
+  // Verifica si el usuario está autenticado
+  const authUser = storage.get("authUser");
+  const authToken = storage.get("authToken");
+
+  if (authUser && authToken) {
+    return (
+      <div className='container-fluid'>
+        <div className="row mt-5">
+          <div className='col-md-4 offset-md-4'>
+            <div className='card border border-dark'>
+              <div className='card-header bg-dark border boder-dark text-white'>
+                PERFIL
+              </div>
+              <div className='card-body text-center'>
+                <h5>{authUser.username}</h5>
+                <p>{authUser.email}</p>
+                <p><strong>Rol:</strong> {authUser.profile}</p>
+                <button className='btn btn-info m-2' onClick={logout}>
+                  <i className='fa-solid fa-sign-out-alt'></i> Cerrar Sesión
+                </button>
+                <Link to='/register' className='btn btn-dark m-2'>
+                  <i className='fa-solid fa-user-plus'></i> Registrarse
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className='container-fluid'>
       <div className="row mt-5">
@@ -86,8 +91,10 @@ function validarContrasena(e) {
             <div className='card-body'>
               <form onSubmit={login}>
                 <DivInput type='text' icon='fa-at' value={username} className='form-control' placeholder='Username...' required='required' handleChange={(e) => setUsername(e.target.value)} />
-                <DivInput type='password' icon='fa-key' value={password} className='form-control' placeholder='Password' required='required' handleChange={(e) => validarContrasena(e)} />
-                <p hidden={contraMal}>La contraseña debe contener al menos 8 carácteres y al menos 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial</p>
+                <DivInput type='password' icon='fa-key' value={password} className='form-control' placeholder='Password' required='required' handleChange={validarContrasena} />
+                <p hidden={contraMal} className='text-danger'>
+                  La contraseña debe contener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial.
+                </p>
                 <div className='d-grid col-10 mx-auto'>
                   <button className='btn btn-dark'>
                     <i className='fa-solid fa-door-open'></i> Login
@@ -96,15 +103,14 @@ function validarContrasena(e) {
               </form>
               <br />
               <Link to='/register'>
-                <i className='fa-solid fa-user-plus'></i> Register
+                <i className='fa-solid fa-user-plus'></i> Registrarse
               </Link>
-              <button className='btn btn-info' onClick={logout}>Logout</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
