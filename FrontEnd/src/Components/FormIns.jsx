@@ -38,9 +38,8 @@ const FormIns = ({ id, title }) => {
             sendRequest('GET', '', '/company/CSR', '', true, "Empresas obtenidas correctamente")
         ]);
 
-        // Asumiendo que las respuestas contienen las listas correspondientes
         if (usuariosRes && Array.isArray(usuariosRes)) {
-            setUsuarios(usuariosRes);
+            setUsuarios(usuariosRes.filter(user => !user.idEmpresa));
         }
 
         if (empresasRes && empresasRes.empresas) {
@@ -54,7 +53,6 @@ const FormIns = ({ id, title }) => {
         let url = id ? `/inscription/CSR/${id}` : '/inscription/CSR';
         let mensaje = id ? "Inscripción actualizada correctamente" : "Inscripción creada correctamente";
     
-        // Función para transformar la fecha en formato DD/MM/YYYY
         const formatDate = (date) => {
             const [year, month, day] = date.split('-');
             return `${day}/${month}/${year}`;
@@ -63,19 +61,16 @@ const FormIns = ({ id, title }) => {
         const data = {
             IdUser: idUser,
             IdCompany: idEmpresa,
-            FecIni: formatDate(fecIni), // Transformar la fecha de inicio
-            FecFin: formatDate(fecFin), // Transformar la fecha de fin
+            FecIni: formatDate(fecIni),
+            FecFin: formatDate(fecFin),
             Observaciones: observaciones
         };
     
-        // Agregar el console.log para ver cómo se están enviando los datos
         console.log("Datos a enviar:", data);
     
         const res = await sendRequest(method, data, url, '', true, mensaje);
         console.log("Respuesta de save:", res);
-
     };
-    
 
     return (
         <div className='container-fluid'>
@@ -87,9 +82,7 @@ const FormIns = ({ id, title }) => {
                         </div>
                         <div className='card-body'>
                             <form onSubmit={save}>
-                                {/* Select para usuarios */}
                                 <DivSelect 
-                                    type='number' 
                                     icon='fa-id-card' 
                                     value={idUser} 
                                     className='form-control' 
@@ -98,10 +91,7 @@ const FormIns = ({ id, title }) => {
                                     handleChange={(e) => setIdUser(e.target.value)} 
                                     options={usuarios.map(user => ({ label: `${user.firstName} ${user.lastName}`, value: user.idUser }))} 
                                 />
-                                
-                                {/* Select para empresas */}
                                 <DivSelect 
-                                    type='text' 
                                     icon='fa-building' 
                                     value={idEmpresa} 
                                     className='form-control' 
@@ -110,8 +100,6 @@ const FormIns = ({ id, title }) => {
                                     handleChange={(e) => setIdEmpresa(e.target.value)} 
                                     options={empresas.map(empresa => ({ label: empresa.name, value: empresa._id }))} 
                                 />
-                                
-                                {/* Otros campos */}
                                 <DivInput 
                                     type='date' 
                                     icon='fa-calendar-days' 

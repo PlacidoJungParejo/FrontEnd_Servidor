@@ -108,7 +108,7 @@ const Inscripciones = () => {
                 {storage.get("authUser").profile === "ADMIN" && (
                   <>
                     <td>
-                      <Link to={`/edit/${inscripcion._id}`} className="btn btn-warning">
+                      <Link to={`/inscription/edit/${inscripcion._id}`} className="btn btn-warning">
                         <i className="fa-solid fa-edit"></i>
                       </Link>
                     </td>

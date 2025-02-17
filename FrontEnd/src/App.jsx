@@ -20,13 +20,11 @@ function App() {
     <BrowserRouter>
       <Nav />
       <Routes>
-        <Route path="/company" element={<Company />} />
-        <Route path="/inscription" element={<Inscriptions />} />
-        <Route path="/inscription/create" element={<CreateInscription />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<Inscriptions />} />
+          <Route path="/company" element={<Company />} />
           <Route path="company/create" element={<CreateCompany />} />
           <Route path="company/edit/:id" element={<EditCompany />} />
           <Route path="company/view/:id" element={<ViewCompany />} />
@@ -34,6 +32,9 @@ function App() {
           <Route path="/users/create" element={<CreateUsers />} />
           <Route path="/users/edit/:id" element={<EditUsers />} />
           <Route path="/users/view/:id" element={<ViewUser />} />
+          <Route path="/inscription" element={<Inscriptions />} />
+          <Route path="/inscription/create" element={<CreateInscription />} />
+          <Route path="/inscription/edit/:id" element={<CreateInscription />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
