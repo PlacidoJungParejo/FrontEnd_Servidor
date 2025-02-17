@@ -5,6 +5,15 @@ import DivAdd from '../../Components/DivAdd';
 
 const Edit = () => {
   const {id} = useParams();
+
+  if (storage.get("profile") == "Superadministrador") {
+    return (
+      <div>
+        <FormUser id={id} title='Editar Usuario' type={"Usuarios"} Superadministrador={true}/>
+      </div>
+    )
+  }
+
   return (
     <div>
       <DivAdd>

@@ -40,56 +40,56 @@ const formatDate = (dateString) => {
 return (
     <div className="container-fluid">
         <DivAdd>
-            <Link to="/users" className="btn btn-primary">
+            <Link to="/users" className="btn btn-dark">
                 <i className="fa-solid fa-arrow-left"></i> Volver
             </Link>
         </DivAdd>
         <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
-            <table className="table table-bordered">
-                {console.log(usuario)}
-                <tbody>
-                    <tr>
-                        <th>ID</th>
-                        <td>{usuario.idUser}</td>
-                    </tr>
-                    <tr>
-                        <th>Nombre</th>
-                        <td>{usuario.firstName}</td>
-                    </tr>
-                    <tr>
-                        <th>Apellido</th>
-                        <td>{usuario.lastName}</td>
-                    </tr>
-                    <tr>
-                        <th>NIF</th>
-                        <td>{usuario.nif}</td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>{usuario.email}</td>
-                    </tr>
-                    <tr>
-                        <th>Nombre de Usuario</th>
-                        <td>{usuario.username}</td>
-                    </tr>
-                    <tr>
-                        <th>Perfil</th>
-                        <td>{usuario.profile}</td>
-                    </tr>
-                    <tr>
-                        <th>Fecha de Creación</th>
-                        <td>{formatDate(usuario.createdDate)}</td>
-                    </tr>
-                    <tr>
-                        <th>Fecha de Modificación</th>
-                        <td>{formatDate(usuario.modifiedDate)}</td>
-                    </tr>
-                    <tr>
-                        <th>Foto</th>
-                        <td>{usuario.picture ? <img src={usuario.picture} alt="Foto de perfil" /> : "No disponible"}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div className="d-flex align-items-center flex-column">
+            <br />
+            <h2>{usuario.username}</h2>
+            <table className="table border table-bordered border-3 w-50 border-warning text-center">
+                    {console.log(usuario)}
+                    <tbody>
+                        <tr>
+                            <th>Nombre</th>
+                            <td>{usuario.firstName}</td>
+                        </tr>
+                        <tr>
+                            <th>Apellido</th>
+                            <td>{usuario.lastName}</td>
+                        </tr>
+                        <tr>
+                            <th>NIF</th>
+                            <td>{usuario.nif}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{usuario.email}</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre de Usuario</th>
+                            <td>{usuario.username}</td>
+                        </tr>
+                        <tr>
+                            <th>Perfil</th>
+                            <td>{usuario.profile}</td>
+                        </tr>
+                        <tr>
+                            <th>Fecha de Creación</th>
+                            <td>{formatDate(usuario.createdDate)}</td>
+                        </tr>
+                        <tr>
+                            <th>Fecha de Modificación</th>
+                            <td>{formatDate(usuario.modifiedDate)}</td>
+                        </tr>
+                        <tr>
+                            <th>Foto</th>
+                            <td>{usuario.picture ? <img src={usuario.picture} alt="Foto de perfil" /> : "No disponible"}</td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
         </DivTable>
     </div>
 );
