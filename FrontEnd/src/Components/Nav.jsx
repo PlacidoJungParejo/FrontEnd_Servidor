@@ -38,7 +38,7 @@ const Nav = () => {
       ) : '' }
       <ul className='navbar-nav mx-auto mb-2'>
             <li className='nav-item px-lg-5'>
-              <button className='btn btn-info' onClick={goLogin}>Login</button>
+              <button className='btn btn-info' onClick={goLogin}>{storage.get("authUser") ? "Perfil" : "Login"}</button>
             </li>
           </ul>
     </nav>

@@ -68,6 +68,7 @@ export const confirmation = async (name,url,redir) => {
     }).then( (result) => {
         if (result.isConfirmed) {
             sendRequest('DELETE',{},url,redir);
+            window.location.reload();
         }
     })
 }

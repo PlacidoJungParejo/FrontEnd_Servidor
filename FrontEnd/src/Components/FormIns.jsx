@@ -97,7 +97,7 @@ const FormIns = ({ id, title, Create = false }) => {
     
         console.log("Datos a enviar:", data);
     
-        const res = await sendRequest(method, data, url, '', true, mensaje);
+        const res = await sendRequest(method, data, url, '/inscription', true, mensaje);
         console.log("Respuesta de save:", res);
     };
     
