@@ -76,6 +76,7 @@ const toggleFavorito = (empresaId) => {
           </Link>
         }
       </DivAdd>
+      {empresas.length === 0 ? <h1 className="text-center">No hay empresas</h1> :
       <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
         <table className="table border table-bordered border-3 border-warning text-center ">
           <thead className="border-3 border-warning">
@@ -161,6 +162,7 @@ const toggleFavorito = (empresaId) => {
           </tbody>
         </table>
       </DivTable>
+    }
     </div>
   );
 };
