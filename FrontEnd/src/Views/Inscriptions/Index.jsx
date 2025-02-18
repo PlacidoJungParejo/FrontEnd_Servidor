@@ -83,6 +83,7 @@ const Inscripciones = () => {
           </Link>
         )}
       </DivAdd>
+      {inscripciones.length === 0 ? <h1 className="text-center">No hay inscripciones</h1> :
       <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
         <table className="table table-bordered">
           <thead>
@@ -155,6 +156,7 @@ const Inscripciones = () => {
           </tbody>
         </table>
       </DivTable>
+  }
     </div>
   );
 };
