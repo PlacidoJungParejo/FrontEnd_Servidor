@@ -8,7 +8,7 @@ const Edit = () => {
   return (
     <div>
       <DivAdd>
-        <Link to="/users" className="btn btn-dark">
+        <Link to="/inscription" className="btn btn-dark">
           <i className="fa-solid fa-arrow-left"></i> Volver
         </Link>
       </DivAdd>

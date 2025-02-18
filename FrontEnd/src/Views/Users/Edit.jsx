@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams, Link } from 'react-router-dom'
 import FormUser from '../../Components/FormUser';
 import DivAdd from '../../Components/DivAdd';
+import storage from '../../Storage/storage';
 
 const Edit = () => {
   const {id} = useParams();

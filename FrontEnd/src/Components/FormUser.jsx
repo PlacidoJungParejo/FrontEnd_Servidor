@@ -3,6 +3,7 @@ import { sendRequest } from '../functions';
 import DivInput from './DivInput';
 import DivSelect from './DivSelect';
 import { useNavigate, Link } from 'react-router-dom'
+import DivAdd from './DivAdd';
 const FormUser = ({ id, title, Create = false , type, Superadministrador = false}) => {
     if (type == "Usuarios"){
         const go = useNavigate();
@@ -58,6 +59,11 @@ const FormUser = ({ id, title, Create = false , type, Superadministrador = false
         
         return (
             <div className='container-fluid'>
+                <DivAdd>
+                        <Link to="/users" className="btn btn-dark">
+                            <i className="fa-solid fa-arrow-left"></i> Volver
+                        </Link>
+                </DivAdd>
                 <div className='row mt-5'>
                     <div className='col-md-4 offset-md-4'>
                         <div className='card border border-warning border-3'>

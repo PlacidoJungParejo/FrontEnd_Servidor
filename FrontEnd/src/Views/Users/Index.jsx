@@ -80,6 +80,11 @@ const Users = () => {
                 <td>{usuario.firstName}</td>
                 <td>{usuario.lastName}</td>
                 <td>{usuario.email}</td>
+                <td>
+                  <Link to={"/users/view/" + usuario.idUser} className="btn btn-success">
+                    <i className="fas fa-eye"></i>
+                  </Link>
+                </td>
                 {storage.get("authUser").profile == "ADMIN" &&
                   <>
                   <td>
@@ -121,11 +126,6 @@ const Users = () => {
                 </td>
                   </>
                 }
-                <td>
-                  <Link to={"/users/view/" + usuario.idUser} className="btn btn-success">
-                    <i className="fas fa-eye"></i>
-                  </Link>
-                </td>
               </tr>
             ))}
           </tbody>

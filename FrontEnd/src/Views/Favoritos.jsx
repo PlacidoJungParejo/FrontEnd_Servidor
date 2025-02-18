@@ -115,6 +115,11 @@ const toggleFavorito = (empresaId) => {
                 <td>{empresa.city}</td>
                 <td>{empresa.type}</td>
                 <td>{empresa.personInCharge}</td>
+                <td>
+                  <Link to={"/company/view/" + empresa._id} className="btn btn-success">
+                    <i className="fas fa-eye"></i>
+                  </Link>
+                </td>
                 {storage.get("authUser").profile === "ADMIN" && 
                 <>
                   <td>
@@ -149,11 +154,6 @@ const toggleFavorito = (empresaId) => {
                   </td>
                 </>
                 }
-                <td>
-                  <Link to={"/company/view/" + empresa._id} className="btn btn-success">
-                    <i className="fas fa-eye"></i>
-                  </Link>
-                </td>
                 <td>
                   <button
                     className={`btn ${favoritos.includes(empresa._id) ? "btn-warning" : "btn-outline-warning"}`}

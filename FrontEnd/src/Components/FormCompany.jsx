@@ -90,10 +90,10 @@ const FormCompany = ({ id, title, Create = false , type}) => {
                                             <DivInput type='text' icon='fa-id-card' value={type} className='form-control' placeholder='Tipo' required handleChange={(e) => setType(e.target.value)} />
                                             <DivInput type='text' icon='fa-id-card' value={city} className='form-control' placeholder='Ciudad' required handleChange={(e) => setCity(e.target.value)} />
                                             <DivInput type='text' icon='fa-id-card' value={area} className='form-control' placeholder='Area' required handleChange={(e) => setArea(e.target.value)} />
-                                            <DivInput type='text' icon='fa-id-card' value={postalCode} className='form-control' placeholder='Codigo postal' required handleChange={(e) => setPostalCode(e.target.value)} />
+                                            <DivInput type='number' icon='fa-id-card' value={postalCode} className='form-control' placeholder='Codigo postal' required handleChange={(e) => setPostalCode(e.target.value)} />
                                             <DivInput type='text' icon='fa-id-card' value={address} className='form-control' placeholder='Dirección' required handleChange={(e) => setAddress(e.target.value)} />
-                                            <DivInput type='text' icon='fa-id-card' value={phone} className='form-control' placeholder='Teléfono' required handleChange={(e) => setPhone(e.target.value)} />
-                                            <DivInput type='text' icon='fa-id-card' value={email} className='form-control' placeholder='Email' required handleChange={(e) => setEmail(e.target.value)} />
+                                            <DivInput type='tel' icon='fa-id-card' value={phone} className='form-control' placeholder='Teléfono' required handleChange={(e) => setPhone(e.target.value)} />
+                                            <DivInput type='email' icon='fa-id-card' value={email} className='form-control' placeholder='Email' required handleChange={(e) => setEmail(e.target.value)} />
                                         </>
                                     ) : (
                                         <>
@@ -102,7 +102,7 @@ const FormCompany = ({ id, title, Create = false , type}) => {
                                             <DivInput type='text' icon='fa-industry' value={type} className='form-control' placeholder='Type' handleChange={(e) => setType(e.target.value)} />
                                             <DivInput type='text' icon='fa-city' value={city} className='form-control' placeholder='City' required handleChange={(e) => setCity(e.target.value)} />
                                             <DivInput type='text' icon='fa-industry' value={personInCharge} className='form-control' placeholder='setPersonInCharge' handleChange={(e) => setPersonInCharge(e.target.value)} />
-                                            <DivInput type='text' icon='fa-industry' value={personInChargeID} className='form-control' placeholder='setPersonInChargeID' handleChange={(e) => setPersonInChargeID(e.target.value)} />
+                                            <DivInput type='number' icon='fa-industry' value={personInChargeID} className='form-control' placeholder='setPersonInChargeID' handleChange={(e) => setPersonInChargeID(e.target.value)} />
                                             <DivInput type='text' icon='fa-map-marker-alt' value={address} className='form-control' placeholder='Address' handleChange={(e) => setAddress(e.target.value)} />
                                             <DivInput type='text' icon='fa-map' value={area} className='form-control' placeholder='Area' handleChange={(e) => setArea(e.target.value)} />
                                             <DivInput type='number' icon='fa-envelope' value={postalCode} className='form-control' placeholder='Postal Code' handleChange={(e) => setPostalCode(e.target.value)} />
