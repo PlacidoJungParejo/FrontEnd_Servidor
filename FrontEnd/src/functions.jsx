@@ -41,10 +41,10 @@ export const sendRequest = async (method, params, url, redir = '', token = true,
     } catch (errors) {
         // Si la URL es la de empresas y ocurre un error, retornamos un objeto con empresas vacías
         if (
-            url === "/company/CSR" &&
-            errors.response &&
+            url &&
+             errors.response &&
             errors.response.status === 400
-          ) {
+           ) {
             res = { empresas: [] };
             return res;
           }

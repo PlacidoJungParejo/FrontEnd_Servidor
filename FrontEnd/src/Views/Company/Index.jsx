@@ -74,7 +74,7 @@ const toggleFavorito = (empresaId) => {
         }
         {storage.get("authUser").profile === "Superadministrador" &&
           <Link to="create" className="btn btn-dark">
-            <i className="fa-solid fa-circle-plus"></i> Add
+            <i className="fa-solid fa-circle-plus"></i> Añadir
           </Link>
         }
       </DivAdd>
