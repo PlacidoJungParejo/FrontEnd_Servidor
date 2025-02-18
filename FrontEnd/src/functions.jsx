@@ -67,19 +67,26 @@ export const sendRequest = async (method, params, url, redir = '', token = true,
     return res;
 };
 
-export const confirmation = async (name,url,redir) => {
-    const alert = Swal.mixin({buttonStyling:true});
-    alert.fire({
-        title:'Estás seguro de eliminar '+name+' ?',
-        icon:'question',showCancelButton:true,
-        confirmButtonText:'<i class="fa-solid fa-check"></i> Si, eliminar',
-        cancelButtonText:'<i class="fa-solid fa-ban"></i> Cancelar'
-    }).then( (result) => {
-        if (result.isConfirmed) {
-            sendRequest('DELETE',{},url,redir);
-            window.location.reload();
-        }
-    })
-}
+export const confirmation = (name, url, redir) => {
+    return new Promise((resolve) => {
+        const alert = Swal.mixin({ buttonStyling: true });
+        alert.fire({
+            title: 'Estás seguro de eliminar ' + name + ' ?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: '<i class="fa-solid fa-check"></i> Si, eliminar',
+            cancelButtonText: '<i class="fa-solid fa-ban"></i> Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                sendRequest('DELETE', {}, url, redir);
+                window.location.reload();
+                resolve(true);  // Devuelve true si el usuario confirma
+            } else {
+                resolve(false); // Devuelve false si el usuario cancela
+            }
+        });
+    });
+};
+
 
 export default show_alerta;

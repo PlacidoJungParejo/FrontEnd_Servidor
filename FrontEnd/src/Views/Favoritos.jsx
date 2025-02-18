@@ -34,21 +34,23 @@ const Favoritos = () => {
     setClassLoad("d-none");
   };
 
-  const deleteEmpresa = (id, name) => {
-    // Eliminar la empresa de la lista de favoritos
-    const nuevosFavoritos = favoritos.filter(favId => favId !== id);
-    setFavoritos(nuevosFavoritos);
-  
-    // Actualizar el localStorage con los nuevos favoritos
-    if (nuevosFavoritos.length === 0) {
-      storage.remove("empresaFAV");
-    } else {
-      storage.set("empresaFAV", nuevosFavoritos);
+  const deleteEmpresa = async (id, name) => {
+    const isConfirmed = await confirmation(name, "/company/CSR/" + id);    
+    
+    if (isConfirmed) {
+      // Eliminar la empresa de la lista de favoritos
+      const nuevosFavoritos = favoritos.filter(favId => favId !== id);
+      setFavoritos(nuevosFavoritos);
+    
+      // Actualizar el localStorage con los nuevos favoritos
+      if (nuevosFavoritos.length === 0) {
+        storage.remove("empresaFAV");
+      } else {
+        storage.set("empresaFAV", nuevosFavoritos);
+      }
     }
-  
-    // Llamar a la función de confirmación para eliminar la empresa
-    confirmation(name, "/company/CSR/" + id);
   };
+  
   
 
  // Función para manejar el cambio de favorito
@@ -81,18 +83,7 @@ const toggleFavorito = (empresaId) => {
 
   return (
     <div className="container-fluid">
-      <DivAdd>
-        {storage.get("authUser").profile === "ADMIN" &&
-          <Link to="create" className="btn btn-dark">
-            <i className="fa-solid fa-circle-plus"></i> Añadir
-          </Link>
-        }
-        {storage.get("authUser").profile === "Superadministrador" &&
-          <Link to="create" className="btn btn-dark">
-            <i className="fa-solid fa-circle-plus"></i> Añadir
-          </Link>
-        }
-      </DivAdd>
+     
       {favoritos.length === 0 ? <h1 className="text-center">No hay Favoritos</h1> :
       <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
         <table className="table border table-bordered border-3 border-warning text-center">
