@@ -81,8 +81,8 @@ const toggleFavorito = (empresaId) => {
         }
       </DivAdd>
       <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
-        <table className="table table-bordered">
-          <thead>
+        <table className="table border table-bordered border-3 border-warning text-center">
+          <thead className="border-3 border-warning">
             <tr>
               <th>ID</th>
               <th>NOMBRE</th>
