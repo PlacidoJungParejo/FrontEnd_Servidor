@@ -35,6 +35,7 @@ const Favoritos = () => {
   };
 
   const deleteEmpresa = (id, name) => {
+    favoritos.filter((f,i) => f[i++] != id)
     confirmation(name, "/company/CSR/" + id);
   };
 
