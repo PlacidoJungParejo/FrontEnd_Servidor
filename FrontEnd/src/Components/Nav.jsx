@@ -36,7 +36,7 @@ const Nav = () => {
       <div className='collapse navbar-collapse' id='nav'>
       <ul className='navbar-nav mx-auto mb-2'>
           <li className='nav-item px-lg-5'>
-            <Link to='/login' className='nav-link'>Login</Link>
+            <Link to='/login' className='nav-link'>{storage.get("authUser") ? "Perfil" : "Login"}</Link>
           </li>
       </ul>
       </div>
