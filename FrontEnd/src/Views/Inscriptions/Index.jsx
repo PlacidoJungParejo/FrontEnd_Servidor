@@ -42,6 +42,9 @@ const Inscripciones = () => {
   };
 
   const getEmpresas = async () => {
+    if (inscripciones.length === 0) {
+      return;
+    }
     const res = await sendRequest("GET", "", "/company/CSR", "");
     console.log(res.empresas);
 

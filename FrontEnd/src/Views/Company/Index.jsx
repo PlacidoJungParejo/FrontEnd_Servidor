@@ -31,6 +31,7 @@ const Empresas = () => {
       setEmpresas(res.empresas);
     } else {
       setEmpresas([]); // Evitar errores si la API no devuelve datos correctos
+      <h1 className="text-center">No hay empresas</h1>
     }
     setClassTable("");
     setClassLoad("d-none");
@@ -60,6 +61,7 @@ const toggleFavorito = (empresaId) => {
 
     return newFavoritos;
   });
+  
 };
 
   return (
@@ -72,14 +74,14 @@ const toggleFavorito = (empresaId) => {
         }
         {storage.get("authUser").profile === "Superadministrador" &&
           <Link to="create" className="btn btn-dark">
-            <i className="fa-solid fa-circle-plus"></i> Añadir
+            <i className="fa-solid fa-circle-plus"></i> Add
           </Link>
         }
       </DivAdd>
       {empresas.length === 0 ? <h1 className="text-center">No hay empresas</h1> :
       <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
-        <table className="table border table-bordered border-3 border-warning text-center ">
-          <thead className="border-3 border-warning">
+        <table className="table table-bordered">
+          <thead>
             <tr>
               <th>ID</th>
               <th>NOMBRE</th>
@@ -162,7 +164,7 @@ const toggleFavorito = (empresaId) => {
           </tbody>
         </table>
       </DivTable>
-    }
+}
     </div>
   );
 };

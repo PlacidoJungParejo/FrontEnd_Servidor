@@ -22,12 +22,12 @@ export const sendRequest = async (method, params, url, redir = '', token = true,
             url: url,
             data: params,
         });
+        
 
         console.log("Mensaje" ,mensaje);
 
         res = response.data;
         if (method !== 'GET') {
-            console.log("asd");
             show_alerta(mensaje, 'success');
         }
 
@@ -39,6 +39,15 @@ export const sendRequest = async (method, params, url, redir = '', token = true,
         }, 2000);
 
     } catch (errors) {
+        // Si la URL es la de empresas y ocurre un error, retornamos un objeto con empresas vacías
+        if (
+            url === "/company/CSR" &&
+            errors.response &&
+            errors.response.status === 400
+          ) {
+            res = { empresas: [] };
+            return res;
+          }
         let desc = '';
         res = errors.response.data;
     
