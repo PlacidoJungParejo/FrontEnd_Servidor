@@ -3,7 +3,7 @@ import DivAdd from "../../Components/DivAdd";
 import DivTable from "../../Components/DivTable";
 import { confirmation, sendRequest } from "../../functions";
 import storage from "../../Storage/storage";
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -22,13 +22,12 @@ const Users = () => {
     if (res) {
       setUsers(res);
     } else {
-      setUsers([]); // Evitar errores si la API no devuelve datos correctos
+      setUsers([]);
     }
     setClassTable("");
     setClassLoad("d-none");
   };
   
-
   const deleteUsers = (id, name) => {
     confirmation(name, "/users/CSR/" + id);
   };
@@ -36,16 +35,11 @@ const Users = () => {
   return (
     <div className="container-fluid">
       <DivAdd>
-        {storage.get("authUser").profile == "ADMIN" &&
-        <Link to="create" className="btn btn-dark">
-          <i className="fa-solid fa-circle-plus"></i> Añadir
-        </Link>
-        }
-        {storage.get("authUser").profile == "Superadministrador" &&
-        <Link to="create" className="btn btn-dark">
-          <i className="fa-solid fa-circle-plus"></i> Añadir
-        </Link>
-        }
+        {(storage.get("authUser").profile === "ADMIN" || storage.get("authUser").profile === "Superadministrador") && (
+          <Link to="create" className="btn btn-dark">
+            <i className="fa-solid fa-circle-plus"></i> Añadir
+          </Link>
+        )}
       </DivAdd>
       <DivTable col="6" off="0" classLoad={classLoad} classTable={classTable}>
         <table className="table border table-bordered border-3 border-warning text-center">
@@ -57,22 +51,11 @@ const Users = () => {
               <th>Apellido</th>
               <th>Email</th>
               <th>Visualizar</th>
-              {storage.get("authUser").profile == "ADMIN" &&
-              <>
               <th>Editar</th>
               <th>Eliminar</th>
-              </>
-              }
-              {storage.get("authUser").profile == "Superadministrador" &&
-              <>
-              <th>Editar</th>
-              <th>Eliminar</th>
-              </>
-              }
             </tr>
           </thead>
           <tbody className="table-group-divider">
-            {console.log("Usuarios" +users)}
             {users.map((usuario, i) => (
               <tr key={usuario.idUser}>
                 <td>{i + 1}</td>
@@ -81,51 +64,30 @@ const Users = () => {
                 <td>{usuario.lastName}</td>
                 <td>{usuario.email}</td>
                 <td>
-                  <Link to={"/users/view/" + usuario.idUser} className="btn btn-success">
+                  <Link to={`/users/view/${usuario.idUser}`} className="btn btn-success">
                     <i className="fas fa-eye"></i>
                   </Link>
                 </td>
-                {storage.get("authUser").profile == "ADMIN" &&
-                  <>
-                  <td>
-                  <Link to={"/users/edit/" + usuario.idUser} className="btn btn-warning">
+                <td>
+                  <Link to={`/users/edit/${usuario.idUser}`} className="btn btn-warning">
                     <i className="fa-solid fa-edit"></i>
                   </Link>
                 </td>
                 <td>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => deleteUsers(usuario.idUser, usuario.username)}
-                  >
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
-                </td>
-                  </>
-                }
-                {storage.get("authUser").profile == "Superadministrador" &&
-                  <>
-                  <td>
-                  <Link to={"/users/edit/" + usuario.idUser} className="btn btn-warning">
-                    <i className="fa-solid fa-edit"></i>
-                  </Link>
-                </td>
-                <td>
-                  {usuario.profile != "Superadministrador" &&
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => deleteUsers(usuario.idUser, usuario.username)}
-                    >
+                  {storage.get("authUser").profile === "Superadministrador" && usuario.profile !== "Superadministrador" ? (
+                    <button className="btn btn-danger" onClick={() => deleteUsers(usuario.idUser, usuario.username)}>
                       <i className="fa-solid fa-trash"></i>
                     </button>
-                  }
-                  {usuario.profile == "Superadministrador" &&
-                    <button className="btn btn-secondary">
-                      <i className="fa-solid fa-x"></i> 
+                  ) : storage.get("authUser").profile === "ADMIN" && usuario.profile !== "Superadministrador" ? (
+                    <button className="btn btn-danger" onClick={() => deleteUsers(usuario.idUser, usuario.username)}>
+                      <i className="fa-solid fa-trash"></i>
                     </button>
-                  }
+                  ) : (
+                    <button className="btn btn-secondary">
+                      <i className="fa-solid fa-x"></i>
+                    </button>
+                  )}
                 </td>
-                  </>
-                }
               </tr>
             ))}
           </tbody>
