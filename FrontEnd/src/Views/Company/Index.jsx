@@ -38,8 +38,20 @@ const Empresas = () => {
   };
 
   const deleteEmpresa = (id, name) => {
-    confirmation(name, "/company/CSR/" + id);
-  };
+      // Eliminar la empresa de la lista de favoritos
+      const nuevosFavoritos = favoritos.filter(favId => favId !== id);
+      setFavoritos(nuevosFavoritos);
+    
+      // Actualizar el localStorage con los nuevos favoritos
+      if (nuevosFavoritos.length === 0) {
+        storage.remove("empresaFAV");
+      } else {
+        storage.set("empresaFAV", nuevosFavoritos);
+      }
+    
+      // Llamar a la función de confirmación para eliminar la empresa
+      confirmation(name, "/company/CSR/" + id);
+    };
 
 // Función para manejar el cambio de favorito
 const toggleFavorito = (empresaId) => {
