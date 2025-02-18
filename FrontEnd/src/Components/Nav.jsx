@@ -1,21 +1,15 @@
 import { Link, useNavigate } from 'react-router-dom';
 import storage from '../Storage/storage';
-import {show_alerta} from "../functions"
-import axios from 'axios';
-
+import image from "./img/logo.png"
+import "./styles/nav.css"
 
 
 const Nav = () => {
-  const go = useNavigate();
-
-  function goLogin(){
-    go("/login")
-  }
 
   return (
-    <nav className='navbar navbar-expand-lg navbar-white bg-info'>
+    <nav className='navbar navbar-expand-lg navbar-white'>
       <div className='container-fluid'>
-        <a className='navbar-brand'>JTP</a>
+        <a className='navbar-brand'><img src={image} alt="JTP" /></a>
         <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#nav' aria-controls='navbarSupportedContent'>
           <span className='navbar-toggler-icon'></span>
         </button>
@@ -32,15 +26,20 @@ const Nav = () => {
             <li className='nav-item px-lg-5'>
               <Link to='/inscription' className='nav-link'>Inscripciones</Link>
             </li>
-          </ul>
-          
-        </div>
-      ) : '' }
-      <ul className='navbar-nav mx-auto mb-2'>
             <li className='nav-item px-lg-5'>
-              <button className='btn btn-info' onClick={goLogin}>{storage.get("authUser") ? "Perfil" : "Login"}</button>
+              <Link to='/favoritos' className='nav-link'>Favoritos</Link>
             </li>
           </ul>
+          
+          </div>
+      ) : '' }
+      <div className='collapse navbar-collapse' id='nav'>
+      <ul className='navbar-nav mx-auto mb-2'>
+          <li className='nav-item px-lg-5'>
+            <Link to='/login' className='nav-link'>Login</Link>
+          </li>
+      </ul>
+      </div>
     </nav>
   );
 };

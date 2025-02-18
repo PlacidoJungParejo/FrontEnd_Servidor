@@ -1,8 +1,7 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
-import FormDep from '../../Components/FormCompany'
+import { useParams, Link } from 'react-router-dom'
 import FormUser from '../../Components/FormUser';
-import storage from '../../Storage/storage'
+import DivAdd from '../../Components/DivAdd';
 
 const Edit = () => {
   const {id} = useParams();
@@ -17,7 +16,12 @@ const Edit = () => {
 
   return (
     <div>
-      <FormUser id={id} title='Editar Usuario' type={"Usuarios"}></FormUser>
+      <DivAdd>
+        <Link to="/users" className="btn btn-dark">
+          <i className="fa-solid fa-arrow-left"></i> Volver
+        </Link>
+      </DivAdd>
+      <FormUser id={id} title='Editar User' type={"Usuarios"}></FormUser>
     </div>
   )
 }

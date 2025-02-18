@@ -38,7 +38,7 @@ const Users = () => {
       <DivAdd>
         {storage.get("authUser").profile == "ADMIN" &&
         <Link to="create" className="btn btn-dark">
-          <i className="fa-solid fa-circle-plus"></i> Add
+          <i className="fa-solid fa-circle-plus"></i> Añadir
         </Link>
         }
         {storage.get("authUser").profile == "Superadministrador" &&
@@ -56,18 +56,17 @@ const Users = () => {
               <th>NOMBRE</th>
               <th>APELLIDO</th>
               <th>EMAIL</th>
+              <th>Visualizar</th>
               {storage.get("authUser").profile == "ADMIN" &&
               <>
               <th>Editar</th>
               <th>Eliminar</th>
-              <th>Visualizar</th>
               </>
               }
               {storage.get("authUser").profile == "Superadministrador" &&
               <>
               <th>Editar</th>
               <th>Eliminar</th>
-              <th>Visualizar</th>
               </>
               }
             </tr>
