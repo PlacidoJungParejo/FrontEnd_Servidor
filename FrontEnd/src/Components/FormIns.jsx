@@ -21,19 +21,14 @@ const FormIns = ({ id, title, Create = false }) => {
 
     const getInscription = async () => {
         console.log("Obteniendo inscripción para ID:", id);
-        // Obtener todas las inscripciones
         const res = await sendRequest('GET', '', '/inscription/CSR', '', true, "Inscripción realizada correctamente");
     
         if (res && Array.isArray(res)) {
-            // Filtrar la inscripción correspondiente usando el _id
-            const inscription = res.find(item => item._id === id);  // Comparar _id con el id de la URL
+            const inscription = res.find(item => item._id === id);
             
-            // Si encontramos la inscripción, actualizar los estados
             if (inscription) {
                 setIdUser(inscription.IdUser || '');
                 setIdEmpresa(inscription.IdCompany || '');
-                
-                // Convertir las fechas a formato yyyy-MM-dd para el input de fecha
                 setFecIni(formatDateToInputFormat(inscription.FecIni) || '');
                 setFecFin(formatDateToInputFormat(inscription.FecFin) || '');
                 setObservaciones(inscription.Observaciones || '');
@@ -43,32 +38,28 @@ const FormIns = ({ id, title, Create = false }) => {
         }
     };
     
-    // Función para convertir la fecha al formato yyyy-MM-dd
     const formatDateToInputFormat = (date) => {
         const [day, month, year] = date.split('/');
         return `${year}-${month}-${day}`;
     };
     
-    // Función para convertir la fecha al formato dd/mm/yyyy
     const formatDateSlash = (date) => {
         const [year, month, day] = date.split('-');
         return `${day}/${month}/${year}`;
     };
     
-    // Función para convertir la fecha al formato dd-mm-yyyy
-    const formatDateDash = (date) => {
-        const [year, month, day] = date.split('-');
-        return `${day}/${month}/${year}`;
-    };
-    
     const getUsuariosAndEmpresas = async () => {
-        const [usuariosRes, empresasRes] = await Promise.all([
+        const [usuariosRes, empresasRes, inscripcionesRes] = await Promise.all([
             sendRequest('GET', '', '/users/CSR', '', true, "Usuarios obtenidos correctamente"),
-            sendRequest('GET', '', '/company/CSR', '', true, "Empresas obtenidas correctamente")
+            sendRequest('GET', '', '/company/CSR', '', true, "Empresas obtenidas correctamente"),
+            sendRequest('GET', '', '/inscription/CSR', '', true, "Inscripciones obtenidas correctamente")
         ]);
 
         if (usuariosRes && Array.isArray(usuariosRes)) {
-            setUsuarios(usuariosRes.filter(user => !user.idEmpresa));
+            const usuariosSinInscripciones = usuariosRes.filter(user => 
+                !inscripcionesRes.some(inscripcion => inscripcion.IdUser === user.idUser)
+            );
+            setUsuarios(usuariosSinInscripciones.filter(user => !user.idEmpresa));
         }
 
         if (empresasRes && empresasRes.empresas) {
@@ -82,12 +73,8 @@ const FormIns = ({ id, title, Create = false }) => {
         let url = id ? `/inscription/CSR/${id}` : '/inscription/CSR';
         let mensaje = id ? "Inscripción actualizada correctamente" : "Inscripción creada correctamente";
         
-        console.log(method);
-    
-        // Convertir las fechas al formato dd/mm/yyyy
         const formattedFecFin = fecFin === undefined || fecFin === '' || fecFin === "undefined-undefined-Fecha de finalización no definida" ? "Fecha de finalización no definida" : formatDateSlash(fecFin);
         const formattedFecIni = formatDateSlash(fecIni);
-        console.log(fecFin);
         
         const data = {
             IdUser: idUser,
@@ -97,12 +84,9 @@ const FormIns = ({ id, title, Create = false }) => {
             Observaciones: observaciones
         };
     
-        console.log("Datos a enviar:", data);
-    
         const res = await sendRequest(method, data, url, '/Inscription', true, mensaje);
         console.log("Respuesta de save:", res);
     };
-    
     
     return (
         <div className='container-fluid'>
@@ -114,9 +98,8 @@ const FormIns = ({ id, title, Create = false }) => {
                         </div>
                         <div className='card-body'>
                             <form onSubmit={save}>
-
-                            {!Create ? (
-                                        <>
+                                {!Create ? (
+                                    <>
                                         <DivInput
                                             type='date'
                                             icon='fa-calendar-days'
@@ -138,9 +121,9 @@ const FormIns = ({ id, title, Create = false }) => {
                                                 <i className='fa-solid fa-save'></i> Guardar
                                             </button>
                                         </div>
-                                        </>
-                                    ) : (
-                                        <>
+                                    </>
+                                ) : (
+                                    <>
                                         <DivSelect
                                             icon='fa-id-card'
                                             value={idUser}
@@ -191,7 +174,6 @@ const FormIns = ({ id, title, Create = false }) => {
                                         </div>
                                     </>
                                 )}
-                                
                             </form>
                         </div>
                     </div>
