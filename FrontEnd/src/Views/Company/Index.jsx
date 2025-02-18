@@ -6,6 +6,7 @@ import { confirmation, sendRequest } from "../../functions";
 import storage from "../../Storage/storage";
 
 const Empresas = () => {
+  
   const [empresas, setEmpresas] = useState([]);
   const [classLoad, setClassLoad] = useState("");
   const [classTable, setClassTable] = useState("d-none");

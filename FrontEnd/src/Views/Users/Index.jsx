@@ -32,10 +32,14 @@ const Users = () => {
     confirmation(name, "/users/CSR/" + id);
   };
 
+  // Verificar el perfil del usuario autenticado
+  const authUserProfile = storage.get("authUser").profile;
+  const isAdminOrSuperAdmin = authUserProfile === "ADMIN" || authUserProfile === "Superadministrador";
+
   return (
     <div className="container-fluid">
       <DivAdd>
-        {(storage.get("authUser").profile === "ADMIN" || storage.get("authUser").profile === "Superadministrador") && (
+        {isAdminOrSuperAdmin && (
           <Link to="create" className="btn btn-dark">
             <i className="fa-solid fa-circle-plus"></i> Añadir
           </Link>
@@ -51,8 +55,8 @@ const Users = () => {
               <th>Apellido</th>
               <th>Email</th>
               <th>Visualizar</th>
-              <th>Editar</th>
-              <th>Eliminar</th>
+              {isAdminOrSuperAdmin && <th>Editar</th>}
+              {isAdminOrSuperAdmin && <th>Eliminar</th>}
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -68,26 +72,34 @@ const Users = () => {
                     <i className="fas fa-eye"></i>
                   </Link>
                 </td>
-                <td>
-                  <Link to={`/users/edit/${usuario.idUser}`} className="btn btn-warning">
-                    <i className="fa-solid fa-edit"></i>
-                  </Link>
-                </td>
-                <td>
-                  {storage.get("authUser").profile === "Superadministrador" && usuario.profile !== "Superadministrador" ? (
-                    <button className="btn btn-danger" onClick={() => deleteUsers(usuario.idUser, usuario.username)}>
-                      <i className="fa-solid fa-trash"></i>
-                    </button>
-                  ) : storage.get("authUser").profile === "ADMIN" && usuario.profile !== "Superadministrador" && usuario.profile !== "ADMIN" ? (
-                    <button className="btn btn-danger" onClick={() => deleteUsers(usuario.idUser, usuario.username)}>
-                      <i className="fa-solid fa-trash"></i>
-                    </button>
-                  ) : (
-                    <button className="btn btn-secondary">
-                      <i className="fa-solid fa-x"></i>
-                    </button>
-                  )}
-                </td>
+
+                {/* Solo mostrar "Editar" si el usuario autenticado es ADMIN o Superadministrador */}
+                {isAdminOrSuperAdmin && (
+                  <td>
+                    <Link to={`/users/edit/${usuario.idUser}`} className="btn btn-warning">
+                      <i className="fa-solid fa-edit"></i>
+                    </Link>
+                  </td>
+                )}
+
+                {/* Solo mostrar "Eliminar" si el usuario autenticado tiene permisos */}
+                {isAdminOrSuperAdmin && (
+                  <td>
+                    {authUserProfile === "Superadministrador" && usuario.profile !== "Superadministrador" ? (
+                      <button className="btn btn-danger" onClick={() => deleteUsers(usuario.idUser, usuario.username)}>
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                    ) : authUserProfile === "ADMIN" && usuario.profile !== "Superadministrador" && usuario.profile !== "ADMIN" ? (
+                      <button className="btn btn-danger" onClick={() => deleteUsers(usuario.idUser, usuario.username)}>
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                    ) : (
+                      <button className="btn btn-secondary">
+                        <i className="fa-solid fa-x"></i>
+                      </button>
+                    )}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
