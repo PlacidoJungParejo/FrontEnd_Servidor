@@ -77,7 +77,7 @@ const Inscripciones = () => {
       <DivAdd>
         {storage.get("authUser").profile == "ADMIN" &&(
           <Link to="/inscription/create/" className="btn btn-dark">
-            <i className="fa-solid fa-circle-plus"></i> Add
+            <i className="fa-solid fa-circle-plus"></i> Añadir
           </Link>
         )}
         {storage.get("authUser").profile == "Superadministrador" &&(

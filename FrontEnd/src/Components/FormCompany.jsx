@@ -112,7 +112,7 @@ const FormCompany = ({ id, title, Create = false , type}) => {
                                     )}
                                     <div className='d-grid col-10 mx-auto'>
                                         <button className='btn btn-dark'>
-                                            <i className='fa-solid fa-save'></i> Save
+                                            <i className='fa-solid fa-save'></i> Guardar
                                         </button>
                                     </div>
                                 </form>
