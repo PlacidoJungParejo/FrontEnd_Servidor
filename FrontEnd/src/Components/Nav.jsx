@@ -5,7 +5,11 @@ import "./styles/nav.css"
 
 
 const Nav = () => {
+  const go = useNavigate();
 
+  function goLogin(){
+    go("/login")
+  }
   return (
     <nav className='navbar navbar-expand-lg navbar-white'>
       <div className='container-fluid'>
@@ -36,7 +40,7 @@ const Nav = () => {
       <div className='collapse navbar-collapse' id='nav'>
       <ul className='navbar-nav mx-auto mb-2'>
           <li className='nav-item px-lg-5'>
-            <Link to='/login' className='nav-link'>{storage.get("authUser") ? "Perfil" : "Login"}</Link>
+            <Link to='/login' onClick={goLogin} className='nav-link'>{storage.get("authUser") ? "Perfil" : "Login"}</Link>
           </li>
       </ul>
       </div>
