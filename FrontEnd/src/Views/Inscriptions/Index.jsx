@@ -92,11 +92,11 @@ const Inscripciones = () => {
           <thead className="border-3 border-warning">
             <tr>
               <th>ID</th>
-              <th>FECHA DE INICIO</th>
-              <th>COMPAÑÍA</th>
-              <th>USUARIO</th>
-              <th>FECHA EXPIRACIÓN</th>
-              <th>OBSERVACIONES</th>
+              <th>Fecha de inicio</th>
+              <th>Compañía</th>
+              <th>Usuario</th>
+              <th>Fecha de expiración</th>
+              <th>Observaciones</th>
               {storage.get("authUser").profile == "ADMIN" && (
                 <>
                 <th>Editar</th>

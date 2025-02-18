@@ -71,12 +71,12 @@ const toggleFavorito = (empresaId) => {
       <DivAdd>
         {storage.get("authUser").profile === "ADMIN" &&
           <Link to="create" className="btn btn-dark">
-            <i className="fa-solid fa-circle-plus"></i> Add
+            <i className="fa-solid fa-circle-plus"></i> Añadir
           </Link>
         }
         {storage.get("authUser").profile === "Superadministrador" &&
           <Link to="create" className="btn btn-dark">
-            <i className="fa-solid fa-circle-plus"></i> Add
+            <i className="fa-solid fa-circle-plus"></i> Añadir
           </Link>
         }
       </DivAdd>
@@ -86,10 +86,10 @@ const toggleFavorito = (empresaId) => {
           <thead className="border-3 border-warning">
             <tr>
               <th>ID</th>
-              <th>NOMBRE</th>
-              <th>CIUDAD</th>
-              <th>TIPO</th>
-              <th>RESPONSABLE</th>
+              <th>Nombre</th>
+              <th>Ciudad</th>
+              <th>Tipo</th>
+              <th>Responsable</th>
               <th>Visualizar</th>
               {storage.get("authUser").profile === "ADMIN" &&
               <>

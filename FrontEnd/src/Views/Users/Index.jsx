@@ -52,10 +52,10 @@ const Users = () => {
           <thead className="border-3 border-warning">
             <tr>
               <th>ID</th>
-              <th>USUARIO</th>
-              <th>NOMBRE</th>
-              <th>APELLIDO</th>
-              <th>EMAIL</th>
+              <th>Usuario</th>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Email</th>
               <th>Visualizar</th>
               {storage.get("authUser").profile == "ADMIN" &&
               <>

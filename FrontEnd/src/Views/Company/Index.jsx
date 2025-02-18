@@ -84,10 +84,10 @@ const toggleFavorito = (empresaId) => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>NOMBRE</th>
-              <th>CIUDAD</th>
-              <th>TIPO</th>
-              <th>RESPONSABLE</th>
+              <th>Nombre</th>
+              <th>Ciudad</th>
+              <th>Tipo</th>
+              <th>Responsable</th>
               <th>Visualizar</th>
               {storage.get("authUser").profile === "ADMIN" &&
               <>
