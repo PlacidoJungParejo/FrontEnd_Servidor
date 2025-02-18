@@ -56,18 +56,17 @@ const Users = () => {
               <th>NOMBRE</th>
               <th>APELLIDO</th>
               <th>EMAIL</th>
+              <th>Visualizar</th>
               {storage.get("authUser").profile == "ADMIN" &&
               <>
               <th>Editar</th>
               <th>Eliminar</th>
-              <th>Visualizar</th>
               </>
               }
               {storage.get("authUser").profile == "Superadministrador" &&
               <>
               <th>Editar</th>
               <th>Eliminar</th>
-              <th>Visualizar</th>
               </>
               }
             </tr>

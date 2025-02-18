@@ -14,6 +14,7 @@ import Inscriptions from "./Views/Inscriptions/Index";
 import CreateInscription from "./Views/Inscriptions/Create";
 import EditarInscription from "./Views/Inscriptions/Edit"
 import ViewUser from "./Views/Users/View";
+import Favoritos from "./Views/Favoritos";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
           <Route path="/inscription" element={<Inscriptions />} />
           <Route path="/inscription/create" element={<CreateInscription />} />
           <Route path="/inscription/edit/:id" element={< EditarInscription/>} />
+          <Route path="/favoritos" element={<Favoritos></Favoritos>} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
