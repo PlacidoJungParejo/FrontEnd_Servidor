@@ -78,7 +78,7 @@ const Users = () => {
                     <button className="btn btn-danger" onClick={() => deleteUsers(usuario.idUser, usuario.username)}>
                       <i className="fa-solid fa-trash"></i>
                     </button>
-                  ) : storage.get("authUser").profile === "ADMIN" && usuario.profile !== "Superadministrador" ? (
+                  ) : storage.get("authUser").profile === "ADMIN" && usuario.profile !== "Superadministrador" && usuario.profile !== "ADMIN" ? (
                     <button className="btn btn-danger" onClick={() => deleteUsers(usuario.idUser, usuario.username)}>
                       <i className="fa-solid fa-trash"></i>
                     </button>
