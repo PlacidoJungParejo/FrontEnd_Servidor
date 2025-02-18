@@ -32,6 +32,9 @@ const Nav = () => {
             <li className='nav-item px-lg-5'>
               <Link to='/inscription' className='nav-link'>Inscripciones</Link>
             </li>
+            <li className='nav-item px-lg-5'>
+              <Link to='/favoritos' className='nav-link'>Favoritos</Link>
+            </li>
           </ul>
           
         </div>

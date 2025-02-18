@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from "react";
-import DivAdd from "../../Components/DivAdd";
-import DivTable from "../../Components/DivTable";
+import DivAdd from "../Components/DivAdd";
+import DivTable from "../Components/DivTable";
 import { Link } from "react-router-dom";
-import { confirmation, sendRequest } from "../../functions";
-import storage from "../../Storage/storage";
+import { confirmation, sendRequest } from "../functions";
+import storage from "../Storage/storage";
 
-const Empresas = () => {
+const Favoritos = () => {
   const [empresas, setEmpresas] = useState([]);
   const [classLoad, setClassLoad] = useState("");
   const [classTable, setClassTable] = useState("d-none");
   const [favoritos, setFavoritos] = useState([]);  // Estado para gestionar favoritos
 
+    console.log( "FAVORITO",storage.get("empresaFAV"));
+
   useEffect(() => {
-    // Cargar favoritos desde localStorage cuando se monta el componente
-    const favoritosStorage = storage.get('empresaFAV');
-    if (favoritosStorage) {
-      setFavoritos(favoritosStorage);
-    }
+    // Obtener empresas favoritas del localStorage
+    const storedFavoritos = storage.get("empresaFAV") || [];
+    setFavoritos(storedFavoritos);
     getEmpresas();
-    // Obtener las empresas favoritas del localStorage
-  const storedFavoritos = storage.get("empresaFAV") || [];
-  setFavoritos(storedFavoritos);
+    
   }, []);
 
   const getEmpresas = async () => {
     const res = await sendRequest("GET", "", "/company/CSR", "");
     console.log(res);
-  
+
     if (res && res.empresas) {
       setEmpresas(res.empresas);
     } else {
@@ -40,27 +38,33 @@ const Empresas = () => {
     confirmation(name, "/company/CSR/" + id);
   };
 
-// Función para manejar el cambio de favorito
+ // Función para manejar el cambio de favorito
 const toggleFavorito = (empresaId) => {
-  setFavoritos(prev => {
-    let newFavoritos;
-    if (prev.includes(empresaId)) {
-      newFavoritos = prev.filter(id => id !== empresaId);  // Eliminar de favoritos
-    } else {
-      newFavoritos = [...prev, empresaId];  // Agregar a favoritos
-    }
-
-    // Si la lista de favoritos está vacía, eliminar la clave del localStorage
-    if (newFavoritos.length === 0) {
-      storage.remove('empresaFAV');  // Eliminar del localStorage si no hay favoritos
-    } else {
+    // Asegurarse de que empresaId sea una cadena
+    const stringifiedEmpresaId = String(empresaId);
+  
+    setFavoritos(prev => {
+      let newFavoritos;
+      if (prev.includes(stringifiedEmpresaId)) {
+        // Eliminar de favoritos
+        newFavoritos = prev.filter(id => id !== stringifiedEmpresaId);
+      } else {
+        // Agregar a favoritos
+        newFavoritos = [...prev, stringifiedEmpresaId];
+      }
+  
       // Guardar el nuevo estado en localStorage
-      storage.set('empresaFAV', newFavoritos);  
-    }
-
-    return newFavoritos;
-  });
-};
+      if (newFavoritos.length === 0) {
+        storage.remove('empresaFAV');  // Eliminar del localStorage si no hay favoritos
+      } else {
+        storage.set('empresaFAV', newFavoritos);
+      }
+  
+      return newFavoritos;
+    });
+  };
+  
+  console.log(favoritos);
 
   return (
     <div className="container-fluid">
@@ -102,7 +106,8 @@ const toggleFavorito = (empresaId) => {
             </tr>
           </thead>
           <tbody className="table-group-divider">
-            {empresas.map((empresa, i) => (
+            {/* Filtrar solo las empresas que están en favoritos */}
+            {empresas.filter(empresa => favoritos.includes(empresa._id)).map((empresa, i) => (
               <tr key={empresa._id}>
                 <td>{i + 1}</td>
                 <td>{empresa.name}</td>
@@ -165,4 +170,4 @@ const toggleFavorito = (empresaId) => {
   );
 };
 
-export default Empresas;
+export default Favoritos;
